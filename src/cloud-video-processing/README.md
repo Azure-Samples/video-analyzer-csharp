@@ -10,5 +10,8 @@ description: "The samples in this repo show how to use the Azure Video Analyzer'
 
 # Azure Video Analyzer samples
 
-This repository contains C# sample for Azure Video Analyzer's preview feature of ingestion from rtsp camera.
+This repository contains C# sample for Azure Video Analyzer's preview features of 
+
+- ingestion from rtsp camera
+- ingestion from rtsp camera behind firewall
 
