@@ -16,8 +16,8 @@ This repository contains C# samples for Azure Video Analyzer preview features
 
 | File/folder       | Description                                |
 |----------------------|--------------------------------------------|
-| `cloud-video-processing`                | Sample source code.
+| `cloud-video-processing`                | Sample code to ingest from rtsp camera.
 | `video-consumption`            | Sample code to generate jwt-token and use player widget.                |
-| `video-export`           |  Sample code to export video to .mp4 file  |                     |
+| `video-export`           |  Sample code to export video to .mp4 file.  |                     |
 | `.gitignore`         | Defines what to ignore at commit time.     |
 | `README.md`          | This README file.
