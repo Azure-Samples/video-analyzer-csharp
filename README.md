@@ -5,7 +5,7 @@ languages:
 products:
   - azure
   - azure-video-analyzer
-description: "The samples in this repo show how to use the Azure Video Analyzer module to analyze live video using AI modules of your choice and optionally record video on the edge device or in the cloud."  
+description: "The samples in this repo show how to use the Azure Video Analyzer module to record video in the cloud."  
 ---
 
 # Azure Video Analyzer samples
