@@ -25,8 +25,8 @@ This repository contains C# samples for Azure Video Analyzer
 
 The 'src' folder contains the following sub-folders:
 
-* **cloud-video-processing** - This folder contains a dotnet core console app that enables you to ***To-do***.
-* **video-export** - This folder has a ***To-do***.
+* **cloud-video-processing** - This folder contains a dotnet core console app that enables you to ingest videos from rtsp camera.
+* **video-export** - This folder has a source code to export video to .mp4 file.
 * **video-consumption** - This folder contains two parts:
  
     * **token-issuer**: an application for generating [JSON Web Tokens](https://datatracker.ietf.org/doc/html/rfc7519). The output can then be used with the [Azure Video Analyzer player widgets](https://docs.microsoft.com/en-us/azure/azure-video-analyzer/video-analyzer-docs/player-widget) for playing back video recordings.

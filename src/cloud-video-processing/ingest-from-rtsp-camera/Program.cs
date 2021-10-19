@@ -75,7 +75,13 @@ namespace PublicCameraPipelineSampleCode
 
                 Console.Read();
             }
-            catch(Exception ex)
+            catch (PipelineResponseException ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Response.Content);
+                Console.ForegroundColor = ConsoleColor.Gray;
+            }
+            catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(ex.ToString());
