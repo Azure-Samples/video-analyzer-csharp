@@ -37,7 +37,7 @@ The 'src' folder contains the following sub-folders:
 1. An active Azure subscription
 2. Azure resources deployed in the Azure subscription
 
-    a. Video Analyzer account
+    a. [Video Analyzer account](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/create-video-analyzer-account?tabs=portal)
 
     b. Storage account
 
@@ -56,20 +56,21 @@ The 'src' folder contains the following sub-folders:
 
 5. [Register App](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app)
 
-## Setup ***To-do***
+Set up Azure resources:
 
-After cloning the repository, follow instructions outlined in **src/cloud-to-device-console-app/readme.md** to setup the console app.
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://aka.ms/ava-click-to-deploy)
 
-## Running the sample ***To-do***
+## Setup
 
-Follow instructions outlined in **src/cloud-to-device-console-app/readme.md** to run the console app.
+After cloning the repository, follow instructions outlined in each folder to setup the respective console app.
 
 ## Key concepts
-
-Read [Azure Video Analyzer concepts](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/overview)
-
-## Resources
 
 - [azure video analyzer sdk](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/videoanalyzer): contains the source code for Azure Video analyzer C# SDK.
 - [Azure Video Analyzer Documentation](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/overview)
 - Get started with [Video Analyzer cloud pipeline](https://aka.ms/cloudpipeline)
+
+
+## Code of conduct
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/).

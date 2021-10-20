@@ -445,23 +445,9 @@ namespace ExportBatchPipelineJobSampleCode
                                 NodeName = "videoSource",
                             },
                         },
-                        Preset = new EncoderCustomPreset
+                        Preset = new EncoderSystemPreset
                         {
-                            VideoEncoder = new VideoEncoderH264
-                            {
-                                BitrateKbps = "3500",
-                                FrameRate = "30",
-                                Scale = new VideoScale
-                                {
-                                    Height = "3840",
-                                    Width = "2160",
-                                    Mode = "Pad",
-                                },
-                            },
-                            AudioEncoder = new AudioEncoderAac
-                            {
-                                BitrateKbps = "96",
-                            },
+                            Name = "SingleLayer_1080p_H264_AAC",
                         },
                     },
                 },
