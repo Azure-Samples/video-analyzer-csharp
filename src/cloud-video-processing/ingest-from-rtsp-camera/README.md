@@ -12,15 +12,14 @@ description: "The samples in this repo show how to use the Azure Video Analyzer'
 
 This repository contains C# sample for Azure Video Analyzer's preview feature of ingestion from rtsp camera. 
 
-## Setup ***To-do*** 
+## Setup 
 
 After cloning the repository, follow instructions outlined in **src/cloud-video-processing/readme.md** to setup the console app.
 
-## Running the sample ***To-do***
+## Running the sample
 
 Follow instructions outlined in **src/cloud-video-processing/readme.md** to run the console app.
 
-## Key concepts ***To-do***
+## Key concepts
 
 Read [Azure Video Analyzer concepts](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/overview)
-
