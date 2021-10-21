@@ -71,7 +71,7 @@ namespace ExportBatchPipelineJobSampleCode
             try
             {
                 // start ingesting to create video for export
-                // if a source video is already available then this can be skippped
+                // if a source video is already available then this can be skipped
                 // and its name can directly be passed as a parameter along with the time range in CreatePipelineJobAsync.
                 Console.WriteLine($"Setting up live pipeline ingestion to create source video for export");
                 await SetupIngestionToCreateSourceVideoForExportAsync();
