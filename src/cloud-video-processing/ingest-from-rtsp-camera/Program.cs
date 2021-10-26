@@ -195,7 +195,7 @@ namespace PublicCameraPipelineSampleCode
         {
             return new PipelineTopology(
                 name: PublicCameraIngestionTopologyName,
-                description: "The pipeline topology with rtsp source and video sink.",
+                description: "Sample pipeline topology for capture, record, and stream live video from a camera that is accessible over the internet",
                 kind: Kind.Live,
                 sku: new Sku(SkuName.LiveS1),
                 parameters: new List<ParameterDeclaration>
@@ -251,8 +251,8 @@ namespace PublicCameraPipelineSampleCode
                         },
                         VideoCreationProperties = new VideoCreationProperties
                         {
-                            Title = "Parking Lot (Camera 1)",
-                            Description = "Parking lot south entrance",
+                            Title = "Sample ingestion from a rtsp camera accessible over the internet",
+                            Description = "Sample video ingestion from a rtsp camera that is accessible over the internet",
                         },
                     },
                 });

@@ -15,15 +15,15 @@ This folder contains C# sample for Azure Video Analyzer's feature of export port
     * Get your Azure Active Directory [Tenant Id](https://docs.microsoft.com/azure/active-directory/fundamentals/active-directory-how-to-find-tenant)
     * Register an application with Microsoft identity platform to get app registration [Client Id](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app#register-an-application) and [Client secret](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
 
-1. Create a [Video Analyzer account](../create-video-analyzer-account.md).
+1. Create a [Video Analyzer account](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/create-video-analyzer-account?tabs=portal).
 
-1. RTSP [capable camera](https://aka.ms/service-supported-cameras) OR a video in Azure Video Analyzer service.
-
-1. [Visual Studio Code](https://code.visualstudio.com/) on your development machine with following extensions
+1. [Visual Studio Code](https://code.visualstudio.com/) on your development machine with following extensions -
     * [Azure IoT Tools](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools)
     * [C#](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp)
 
-1. [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) on your development machine
+1. [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) on your development machine.
+
+1. RTSP [capable camera](https://aka.ms/service-supported-cameras) OR a video in Azure Video Analyzer service.
 
 ### Setup
 
