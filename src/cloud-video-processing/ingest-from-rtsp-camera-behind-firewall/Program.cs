@@ -30,7 +30,7 @@ namespace PrivateCameraPipelineSampleCode
 
         // private camera ingestion parameters for pipeline setup
         private const string PrivateCameraIngestionTunnelingDeviceId = "<Provide device Id>";
-        private const string IotHubNameForPrivateCameraIngestion = "<Provide IoT hub name>";
+        private const string iotHubNameForPrivateCameraIngestion = "<Provide IoT hub name>";
         private const string PrivateCameraIngestionSourceRTSPURL = "<Provide RTSP source url>";
         private const string PrivateCameraIngestionSourceRTSPUserName = "<Provide RTSP source username>";
         private const string PrivateCameraIngestionSourceRTSPPassword = "<Provide RTSP source password>";
@@ -196,7 +196,7 @@ namespace PrivateCameraPipelineSampleCode
         {
             return new PipelineTopology(
                 name: PrivateCameraIngestionTopologyName,
-                description: "The pipeline topology with tunneling between rtsp source and video sink.",
+                description: "Sample pipeline topology for capture, record, and stream live video from a camera that is behind a firewall",
                 kind: Kind.Live,
                 sku: new Sku(SkuName.LiveS1),
                 parameters: new List<ParameterDeclaration>
@@ -240,7 +240,7 @@ namespace PrivateCameraPipelineSampleCode
                             Tunnel = new SecureIotDeviceRemoteTunnel
                             {
                                 DeviceId = PrivateCameraIngestionTunnelingDeviceId,
-                                IotHubName = iotHubNameForPrivateCameraIngestion,
+                                IotHubName = IotHubNameForPrivateCameraIngestion,
                             },
                         },
                     },
@@ -257,8 +257,8 @@ namespace PrivateCameraPipelineSampleCode
                         },
                         VideoCreationProperties = new VideoCreationProperties
                         {
-                            Title = "Parking Lot (Camera 1)",
-                            Description = "Parking lot south entrance"
+                            Title = "Sample ingestion from a rtsp camera behind a firewall",
+                            Description = "Sample video ingestion from a rtsp camera that is behind a firewall"
                         },
                     },
                 });
