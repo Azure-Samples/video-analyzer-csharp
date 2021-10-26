@@ -35,7 +35,7 @@ namespace PublicCameraPipelineSampleCode
 
         private const string PublicCameraIngestionTopologyName = "PubIngestionTopology-1";
         private const string PublicCameraIngestionPipelineName = "PubIngestionPipeline-1";
-        private const string PublicCameraIngestionSinkVideoName = PublicCameraIngestionPipelineName + "camera-001";
+        private const string PublicCameraIngestionSinkVideoName = PublicCameraIngestionPipelineName + "-camera-001";
 
         // parameter names
         private const string RtspUserNameParameterName = "rtspUserNameParameter";

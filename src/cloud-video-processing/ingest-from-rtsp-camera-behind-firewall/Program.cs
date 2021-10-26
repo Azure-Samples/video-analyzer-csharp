@@ -30,14 +30,14 @@ namespace PrivateCameraPipelineSampleCode
 
         // private camera ingestion parameters for pipeline setup
         private const string PrivateCameraIngestionTunnelingDeviceId = "<Provide device Id>";
-        private const string iotHubNameForPrivateCameraIngestion = "<Provide IOT hub name>";
+        private const string IotHubNameForPrivateCameraIngestion = "<Provide IoT hub name>";
         private const string PrivateCameraIngestionSourceRTSPURL = "<Provide RTSP source url>";
         private const string PrivateCameraIngestionSourceRTSPUserName = "<Provide RTSP source username>";
         private const string PrivateCameraIngestionSourceRTSPPassword = "<Provide RTSP source password>";
 
         private const string PrivateCameraIngestionTopologyName = "PrivIngestionTopology-1";
         private const string PrivateCameraIngestionPipelineName = "PrivIngestionPipeline-1";
-        private const string PrivateCameraIngestionSinkVideoName = PrivateCameraIngestionPipelineName + "camera-001";
+        private const string PrivateCameraIngestionSinkVideoName = PrivateCameraIngestionPipelineName + "-camera-001";
 
         // parameter names 
         private const string RtspUserNameParameterName = "rtspUserNameParameter";
@@ -279,7 +279,7 @@ namespace PrivateCameraPipelineSampleCode
               // if the rtsp source exceeds the capacity, then the service will disconnect temporarily from the camera
               // and will try again to check if camera bitrate is now below the reserved capacity.
               // Allowed range is 500 to 3000 kbps.
-              bitrateKbps: 500,
+              bitrateKbps: 1500,
               parameters: new List<ParameterDefinition>
               {
                     new ParameterDefinition(RtspUserNameParameterName, PrivateCameraIngestionSourceRTSPUserName),
