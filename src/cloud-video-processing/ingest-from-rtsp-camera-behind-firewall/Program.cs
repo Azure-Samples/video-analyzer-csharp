@@ -30,7 +30,7 @@ namespace PrivateCameraPipelineSampleCode
 
         // private camera ingestion parameters for pipeline setup
         private const string PrivateCameraIngestionTunnelingDeviceId = "<Provide device Id>";
-        private const string iotHubNameForPrivateCameraIngestion = "<Provide IoT hub name>";
+        private const string IotHubNameForPrivateCameraIngestion = "<Provide IoT hub name>";
         private const string PrivateCameraIngestionSourceRTSPURL = "<Provide RTSP source url>";
         private const string PrivateCameraIngestionSourceRTSPUserName = "<Provide RTSP source username>";
         private const string PrivateCameraIngestionSourceRTSPPassword = "<Provide RTSP source password>";

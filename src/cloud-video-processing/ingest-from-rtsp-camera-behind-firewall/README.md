@@ -88,8 +88,6 @@ Once you have the setup ready with necessary configuration, now is the time to r
 - Click on Videos blade and choose the video created. Default video name is **PrivIngestionPipeline-1-camera-001** stored in variable `PrivateCameraIngestionPipelineName` in line 39. The video will be in a `Recording` status. 
 - Go back to Visual Studio Code TERMINAL window and press enter to deactivate the pipeline and cleanup the resources including pipeline and topology. The recording is persisted and status changes to `Not recording`.
 
-❗**Note:** When running the debugger with the cloud-video-processing/ingest-from-rtsp-camera-behind-firewall project, the default launch.json creates a configuration with the parameter "console": "internalConsole". This does not work since internalConsole does not allow keyboard input. Changing the parameter to "console" : "integratedTerminal" fixes the problem.
-
 ### Next steps
 
 - Try the quickstart to create a live pipeline [using Azure portal](https://aka.ms/cloudpipeline).

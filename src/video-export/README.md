@@ -45,7 +45,8 @@ This folder contains C# sample for Azure Video Analyzer's feature of export port
 | PublicCameraIngestionSourceRTSPUserName *(optional)* | Provide RTSP source username |
 | PublicCameraIngestionSourceRTSPPassword *(optional)* | Provide RTSP source password |
 
-- *The 3 RTSP parameters in the table are optional if you already have a video source.*
+**NOTE: If you already have a video source**, the 3 RTSP parameters in the table are optional. See [Use existing video](#use-existing-video) section for the necessary code changes.
+
 - Optionally, you can provide custom values for batch export pipeline parameters and parameter names, defined just below the variables mentioned in the table (lines 42 - 53).
 - Save the changes.
 
@@ -72,7 +73,6 @@ public static async Task Main(string[] args)
 
     1. Using the video created in above step as the source, create a batch topology.
         * CreateTopologyForBatchExportAsync() method creates a pipeline topology with the properties:
-            *  Batch_S1 sku
             *  Video source node
             *  Encoder processor node - Encoder with System Preset configuration. Learn more details about [encoder processor node](#encoder-processor-node).
             *  Video sink node
@@ -95,7 +95,20 @@ Once you have the setup ready with necessary configuration, now is the time to r
 - Click on Videos blade and choose the video recording created. Default video recording name is **PipelineJob-1-camera-001** stored in variable `PipelineExportedVideoName` in line 44.
 - Go back to Visual Studio Code TERMINAL window and press enter to cleanup the resources including pipeline job and batch topology. The exported recording is persisted.
 
-❗**Note:** When running the debugger with the video-export project, the default launch.json creates a configuration with the parameter "console": "internalConsole". This does not work since internalConsole does not allow keyboard input. Changing the parameter to "console" : "integratedTerminal" fixes the problem.
+### Use existing video
+
+If a source video is already available in Azure Video Analyzer Videos list (the source video should be of type `archive`), then -
+ 
+* You can skip the step to create an ingestion pipeline in SetupIngestionToCreateSourceVideoForExportAsync() method.
+* Provide the name of the source video as a parameter along with the time range in CreatePipelineJobAsync() in line 93. 
+* To skip this step, comment the code at lines 76, 77 and 80.
+
+<br>
+<p align="center">
+  <img src="./images/commented-code.png" title="Commented Code in video-export"/>
+</p>
+<br>
+
 
 ### Encoder processor node
 
