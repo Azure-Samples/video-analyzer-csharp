@@ -10,11 +10,11 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/video-consumption/token-issuer/bin/Debug/netcoreapp3.1/JwtTokenIssuer.dll",
+            "program": "${workspaceFolder}/src/cloud-video-processing/ingest-from-rtsp-camera/bin/Debug/netcoreapp3.1/PublicCameraPipelineSampleCode.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/video-consumption/token-issuer",
+            "cwd": "${workspaceFolder}/src/cloud-video-processing/ingest-from-rtsp-camera",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "internalConsole",
+            "console": "integratedTerminal",
             "stopAtEntry": false
         },
         {

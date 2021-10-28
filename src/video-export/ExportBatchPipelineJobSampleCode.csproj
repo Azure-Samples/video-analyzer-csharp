@@ -10,13 +10,8 @@
     <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.21" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.19.0" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="2.4.1" />
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.Azure.Management.VideoAnalyzer">
-      <HintPath>..\..\Referenced\netstandard2.0\Microsoft.Azure.Management.VideoAnalyzer.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="4.3.0" />    
+    <PackageReference Include="Microsoft.Azure.Management.VideoAnalyzer" Version="1.0.0-beta.2" />
   </ItemGroup>
 
 </Project>
