@@ -48,7 +48,7 @@ The 'src' folder contains the following sub-folders:
 
     c. Managed Identity
 
-    d. IoT Hub
+    d. Attach a [new](https://docs.microsoft.com/azure/iot-hub/iot-hub-create-through-portal) or [existing IoT Hub to Video Analyzer](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/create-video-analyzer-account?tabs=portal)
 
 1. [Visual Studio Code](https://code.visualstudio.com/) on your development machine with following extensions -
     * [Azure IoT Tools](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools)
@@ -56,17 +56,20 @@ The 'src' folder contains the following sub-folders:
 
 1. [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) on your development machine.
 
-Set up Azure resources:
-
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://aka.ms/ava-click-to-deploy)
-
 ## Setup
 
 After cloning the repository, follow instructions outlined in each folder to setup the respective app.
 
+## Next steps
+
+* [Ingest videos from RTSP camera behind a firewall](./src/cloud-video-processing/ingest-from-rtsp-camera-behind-firewall) 
+* [Ingest videos from RTSP camera accessible on the internet](./src/cloud-video-processing/ingest-from-rtsp-camera)
+* [Export a portion of recorded video as an MP4 file](./src/video-export)
+* Generate [JSON Web Token](./src/video-consumption/token-issuer) to use with [Video Analyzer widget player](./src/video-consumption/video-player)
+
 ## Key concepts
 
-- [azure video analyzer sdk](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/videoanalyzer): contains the source code for Azure Video analyzer C# SDK.
+- [Azure Video Analyzer SDK](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/videoanalyzer): contains the source code for Azure Video analyzer C# SDK
 - [Azure Video Analyzer Documentation](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/overview)
 - Get started with [Video Analyzer cloud pipeline](https://aka.ms/cloudpipeline)
 

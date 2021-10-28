@@ -251,8 +251,8 @@ namespace PublicCameraPipelineSampleCode
                         },
                         VideoCreationProperties = new VideoCreationProperties
                         {
-                            Title = "Sample ingestion from a rtsp camera accessible over the internet",
-                            Description = "Sample video ingestion from a rtsp camera that is accessible over the internet",
+                            Title = "Sample ingestion from a public rtsp camera",
+                            Description = "Sample video ingestion from a rtsp camera that is accessible over the public internet",
                         },
                     },
                 });

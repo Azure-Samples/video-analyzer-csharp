@@ -32,7 +32,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/src/video-consumption/token-issuer/Tools.JwtTokenIssuer.csproj",
+                "${workspaceFolder}/src/cloud-video-processing/ingest-from-rtsp-camera/PublicCameraPipelineSampleCode.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

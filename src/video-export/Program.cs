@@ -71,25 +71,24 @@ namespace ExportBatchPipelineJobSampleCode
             try
             {
                 // start ingesting to create video for export
-                // if a source video is already available then this can be skippped
-                // and its name can directly be passed as a parameter along with the time range in CreatePipelineJobAsync.
-                /*
+                // if a source video is already available then this can be skipped
+                // and its name can directly be passed as a parameter along with the time range in CreatePipelineJobAsync.               
                 Console.WriteLine($"Setting up live pipeline ingestion to create source video for export");
                 await SetupIngestionToCreateSourceVideoForExportAsync();
 
                 // wait for 10 secs before kicking off the batch pipeline job to have a clip exported for 5 secs.
                 await Task.Delay(TimeSpan.FromSeconds(clipDurationInSec * 2));
-                */
-                await CreateTopologyForBatchExportAsync();
-                Console.WriteLine($"Created topology '{ExportBatchTopologyName}'");
-
+                
                 // provide the time range within which the video clip is to be exported.
                 string range = JsonConvert.SerializeObject(
                     new DateTime[,]
                     {
                         // 5 secs time range:  StartTime: (Current Time - 7 secs), EndTime: (Current Time - 2 secs)
                         {  DateTime.UtcNow - TimeSpan.FromSeconds(clipDurationInSec + 2), DateTime.UtcNow - TimeSpan.FromSeconds(2) }
-                    });
+                    });          
+                
+                await CreateTopologyForBatchExportAsync();
+                Console.WriteLine($"Created topology '{ExportBatchTopologyName}'");                
 
                 await CreatePipelineJobAsync(PublicCameraIngestionSinkVideoName, range);
                 Console.WriteLine($"Created pipeline job '{PipelineJobName}'");
@@ -384,8 +383,8 @@ namespace ExportBatchPipelineJobSampleCode
                         },
                         VideoCreationProperties = new VideoCreationProperties
                         {
-                            Title = "Sample ingestion from a rtsp camera accessible over the internet",
-                            Description = "Sample video ingestion from a rtsp camera that is accessible over the internet",
+                            Title = "Sample ingestion from a public rtsp camera",
+                            Description = "Sample video ingestion from a rtsp camera that is accessible over the public internet",
                         },
                     },
                 });
