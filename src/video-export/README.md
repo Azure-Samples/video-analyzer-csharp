@@ -69,7 +69,7 @@ public static async Task Main(string[] args)
 
     1. Setup video ingestion to create source video using public camera ingestion parameters.
         * SetupIngestionToCreateSourceVideoForExportAsync() method starts video ingestion from the URL specified in `PublicCameraIngestionSourceRTSPURL`.
-        * If a source video is already available in Azure Video Analyzer Videos list (the source video should be of type `archive`), then this step can be skipped and name of the source video can be directly passed as a parameter along with the time range in CreatePipelineJobAsync() in line 93. To skip this step, comment the code at lines 76, 77 and 80.
+        * If a source video is already available in Azure Video Analyzer Videos list (the source video should be of type `archive`), then this step can be skipped and name of the source video can be directly passed as a parameter along with the time range in CreatePipelineJobAsync() in line 93. See [Use existing video](#use-existing-video) section for the necessary code changes.
 
     1. Using the video created in above step as the source, create a batch topology.
         * CreateTopologyForBatchExportAsync() method creates a pipeline topology with the properties:
@@ -90,7 +90,8 @@ public static async Task Main(string[] args)
 
 Once you have the setup ready with necessary configuration, now is the time to run the sample program:
 
-- Start a debugging session (hit F5). You will start seeing some messages printed in the TERMINAL window denoting topology and pipeline job creation. If the job is successful, you can go to portal to playback the recording. 
+- Start a debugging session. You can set this project as default project to run on hitting F5 by modifying the launch.json and tasks.json files in .vscode folder. Alternatively, go to TERMINAL window in the Visual Studio Code, navigate using cd src/video-export. Type commands `dotnet build` and `dotnet run` to compile and run the program respectively.  
+- You will start seeing some messages printed in the TERMINAL window denoting topology and pipeline job creation. If the job is successful, you can go to portal to playback the recording. 
 - Login to [Azure portal](https://portal.azure.com/), go to the Azure Video Analyzer account being used for this project.
 - Click on Videos blade and choose the video recording created. Default video recording name is **PipelineJob-1-camera-001** stored in variable `PipelineExportedVideoName` in line 44.
 - Go back to Visual Studio Code TERMINAL window and press enter to cleanup the resources including pipeline job and batch topology. The exported recording is persisted.
@@ -99,13 +100,12 @@ Once you have the setup ready with necessary configuration, now is the time to r
 
 If a source video is already available in Azure Video Analyzer Videos list (the source video should be of type `archive`), then -
  
-* You can skip the step to create an ingestion pipeline in SetupIngestionToCreateSourceVideoForExportAsync() method.
-* Provide the name of the source video as a parameter along with the time range in CreatePipelineJobAsync() in line 93. 
-* To skip this step, comment the code at lines 76, 77 and 80.
+* You can skip the step to create an ingestion pipeline in SetupIngestionToCreateSourceVideoForExportAsync() method. To skip this step, comment the code from lines 76 to 88 as shown in the screenshot.
+* In CreatePipelineJobAsync() method at line 93, replace `PublicCameraIngestionSinkVideoName` to name of the source video and `range` to the time range of recording required as shown in the screenshot. 
 
 <br>
-<p align="center">
-  <img src="./images/commented-code.png" title="Commented Code in video-export"/>
+<p align="left">
+  <img src="./images/use-existing-video.png" title="Use existing video in video-export"/>
 </p>
 <br>
 

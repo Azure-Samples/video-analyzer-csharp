@@ -15,7 +15,7 @@ This folder contains C# sample for Azure Video Analyzer's preview feature of ing
     * Get your Azure Active Directory [Tenant Id](https://docs.microsoft.com/azure/active-directory/fundamentals/active-directory-how-to-find-tenant)
     * Register an application with Microsoft identity platform to get app registration [Client Id](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app#register-an-application) and [Client secret](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
 
-1. Create a [Video Analyzer account](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/create-video-analyzer-account?tabs=portal).
+1. Create a [Video Analyzer account](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/create-video-analyzer-account?tabs=portal) and attach an IoT Hub to the Video Analyzer account.
 
 1. [Visual Studio Code](https://code.visualstudio.com/) on your development machine with following extensions -
     * [Azure IoT Tools](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools)
@@ -71,7 +71,7 @@ public static async Task Main(string[] args)
 
     1. On successful creation of topology, a live pipeline is created in `CreateLivePipelineForPublicCameraAsync()` method using: 
         * Topology and Pipeline names defined in the variables section during setup.
-        *  `bitrateKbps` - Bitrate is set to 1500 kbps by default in line 270. Video encoding bitrate must be between 500 and 3000 Kbps. If true ingestion bitrate is above this threshold, ingestion will be disconnected and reconnected with exponential backoff.
+        *  `bitrateKbps` - Bitrate is set to 1500 kbps by default in line 276. Video encoding bitrate must be between 500 and 3000 Kbps. If true ingestion bitrate is above this threshold, ingestion will be disconnected and reconnected with exponential backoff.
 
     1. On successful completion of pipeline, the pipeline is activated using ActivateLivePipelineAsync() method. This will start your live pipeline and start recording the video.
  
@@ -90,7 +90,7 @@ Once you have the setup ready with necessary configuration, now is the time to r
 
 ### Next steps
 
-- Try the sample code for exporting portion of recorded video as an MP4 file in the same repo.
-- Try the quickstart to create a live pipeline [using Azure portal](https://aka.ms/cloudpipeline).
-- Learn more about [live and batch pipelines](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/pipeline).
-- [Quotas and limitations](https://aka.ms/livequota) on live pipelines.
+- [Export portion of recorded video as an MP4 file](../../src/video-export)
+- Try the quickstart to create a live pipeline [using Azure portal](https://aka.ms/cloudpipeline)
+- Learn more about [live and batch pipelines](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/pipeline)
+- [Quotas and limitations](https://aka.ms/livequota) on live pipelines
