@@ -1,6 +1,6 @@
-# Azure Video Analyzer sample to capture and ingest video from RTSP camera accessible over the public internet  
+# Azure Video Analyzer sample to capture and record live video from an RTSP camera accessible over the internet  
 
-This folder contains C# sample for Azure Video Analyzer's preview feature of ingestion from RTSP capable camera over the public internet. 
+This folder contains a C# sample to capture and record live video from an RTSP camera accessible over the internet  
 
 ### Contents
 
@@ -15,7 +15,7 @@ This folder contains C# sample for Azure Video Analyzer's preview feature of ing
     * Get your Azure Active Directory [Tenant Id](https://docs.microsoft.com/azure/active-directory/fundamentals/active-directory-how-to-find-tenant)
     * Register an application with Microsoft identity platform to get app registration [Client Id](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app#register-an-application) and [Client secret](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
 
-1. Create a [Video Analyzer account](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/create-video-analyzer-account?tabs=portal) and attach an IoT Hub to the Video Analyzer account.
+1. Create a [Video Analyzer account](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/create-video-analyzer-account?tabs=portal).
 
 1. [Visual Studio Code](https://code.visualstudio.com/) on your development machine with following extensions -
     * [Azure IoT Tools](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools)
@@ -23,7 +23,7 @@ This folder contains C# sample for Azure Video Analyzer's preview feature of ing
 
 1. [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) on your development machine.
 
-1. RTSP [capable camera](https://aka.ms/service-supported-cameras) and the RTSP server on this camera needs to be accessible over the public internet. Alternatively, you can deploy an [RTSP camera simulator](https://aka.ms/deploy-rtsp-camsim).
+1. An [RTSP capable camera](https://aka.ms/service-supported-cameras) where the RTSP server on this camera is accessible over the public internet. Alternatively, you can deploy an [RTSP camera simulator](https://aka.ms/deploy-rtsp-camsim).
 
 ### Setup
 
@@ -39,7 +39,7 @@ This folder contains C# sample for Azure Video Analyzer's preview feature of ing
 | ClientId | Provide app registration client id |
 | Secret | Provide app registration client secret |
 | AuthenticationEndpoint | Provide authentication end point (example: https://login.microsoftonline.com) |
-| ArmEndPoint | Provide arm end point (example: https://management.azure.com) |
+| ArmEndPoint | Provide ARM end point (example: https://management.azure.com) |
 | TokenAudience | Provide token audience (example: https://management.core.windows.net) |
 | PublicCameraIngestionSourceRTSPURL | Provide RTSP source url  |
 | PublicCameraIngestionSourceRTSPUserName | Provide RTSP source username |
@@ -63,34 +63,32 @@ public static async Task Main(string[] args)
 ```
 
 - SetupClientAsync() method is used for service principal authentication.
-- IngestFromPublicCameraAsync() method is used to capture and ingest video from a rtsp camera on public network. This method has the following logic:
+- IngestFromPublicCameraAsync() method is used to capture (ingest) and record video from an RTSP camera accessible over the internet. This method does the following:
 
-    1. Create a topology for public camera ingestion in `CreateTopologyForPublicCameraAsync()` method with the following nodes:
+    1. Create a [pipeline topology](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/pipeline) in `CreateTopologyForPublicCameraAsync()` method with the following nodes:
         *  RTSP source node
         *  Video sink node
 
-    1. On successful creation of topology, a live pipeline is created in `CreateLivePipelineForPublicCameraAsync()` method using: 
+    1. On successful creation of that topology, a [live pipeline](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/pipeline) is created in `CreateLivePipelineForPublicCameraAsync()` method using: 
         * Topology and Pipeline names defined in the variables section during setup.
-        *  `bitrateKbps` - Bitrate is set to 1500 kbps by default in line 276. Video encoding bitrate must be between 500 and 3000 Kbps. If true ingestion bitrate is above this threshold, ingestion will be disconnected and reconnected with exponential backoff.
+        *  `bitrateKbps` - Bitrate is set to 1500 kbps by default in line 276.This represents the maximum bitrate for the RTSP camera, and it must be between 500 and 3000 Kbps. If bitrate of the live video from the camera exceeds this threshold, then the service will keep disconnecting from the camera, and retrying later - with exponential backoff.
 
-    1. On successful completion of pipeline, the pipeline is activated using ActivateLivePipelineAsync() method. This will start your live pipeline and start recording the video.
+    1. If the pipeline is created successfully, it is then activated using ActivateLivePipelineAsync() method. This will start the flow of live video.
  
-    1. You can playback the recording in Azure portal -> Video Analyzer account blade -> Videos pane.
-
 ### Running the sample
 
-Once you have the setup ready with necessary configuration, now is the time to run the sample program:
+Once you have the configuration steps completed, you can run the program.
 
-- Start a debugging session (hit F5). You will start seeing some messages printed in the TERMINAL window denoting topology and pipeline creation. If the creation is successful, the live pipeline is activated and you can go to portal to playback the recording. 
-- Login to [Azure portal](https://portal.azure.com/), go to the Azure Video Analyzer account being used for this project.
-- Click on Videos blade and choose the video created. Default video name is **PubIngestionPipeline-1-camera-001** stored in variable `PublicCameraIngestionSinkVideoName` in line 38. The video will be in a `Recording` status. 
+- Start a debugging session (hit F5). You will start seeing some messages printed in the TERMINAL window regarding topology and pipeline creation. If the creation is successful, the live pipeline is activated and you can go to the Azure portal to view the video. 
+- Login to [Azure portal](https://portal.azure.com/), go to the Video Analyzer account being used for this project.
+- Click on the Videos blade and choose the video created. Default video name is **PubIngestionPipeline-1-camera-001** stored in variable `PublicCameraIngestionSinkVideoName` in line 38. The video should be in a `In Use` status. Click on the video, and you should see a [low latency stream](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/playback-recordings-how-to.md#low-latency-streaming) of the live video from the camera.
 - Go back to Visual Studio Code TERMINAL window and press enter to deactivate the pipeline and cleanup the resources including pipeline and topology. The recording is persisted and status changes to `Not recording`.
 
 ❗**Note:** When running the debugger with the cloud-video-processing/ingest-from-rtsp-camera project, the default launch.json creates a configuration with the parameter "console": "internalConsole". This does not work since internalConsole does not allow keyboard input. Changing the parameter to "console" : "integratedTerminal" fixes the problem.
 
 ### Next steps
 
-- [Export portion of recorded video as an MP4 file](../../src/video-export)
+- [Export a portion of the recorded video as an MP4 file](../../src/video-export)
 - Try the quickstart to create a live pipeline [using Azure portal](https://aka.ms/cloudpipeline)
 - Learn more about [live and batch pipelines](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/pipeline)
 - [Quotas and limitations](https://aka.ms/livequota) on live pipelines
