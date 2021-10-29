@@ -9,6 +9,10 @@ This folder contains C# sample for Azure Video Analyzer's preview feature of ing
 | `PrivateCameraPipelineSampleCode.csproj`| Project file                                                 |
 | `Program.cs`            | The main program file                                         |
 
+### Suggested Pre-reading
+* [Connect camera to cloud](https://review.docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/cloud/connect-cameras-to-cloud?branch=release-ignite-video-analyzer)
+* [Connect camera to cloud using remote device adapter](https://review.docs.microsoft.com/en-us/azure/azure-video-analyzer/video-analyzer-docs/cloud/use-remote-device-adapter?branch=release-ignite-video-analyzer)
+
 ### Pre-requisites
 
 1. An Azure account that includes an active subscription. [Create an account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F) for free if you don't already have one.
@@ -17,6 +21,8 @@ This folder contains C# sample for Azure Video Analyzer's preview feature of ing
 
 1. Create a [Video Analyzer account](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/create-video-analyzer-account?tabs=portal).
 
+1.  [IoT Edge device with Video Analyzer edge module installed and configured](https://review.docs.microsoft.com/en-us/azure/azure-video-analyzer/video-analyzer-docs/edge/deploy-iot-edge-device?branch=release-ignite-video-analyzer)
+
 1. [Visual Studio Code](https://code.visualstudio.com/) on your development machine with following extensions -
     * [Azure IoT Tools](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools)
     * [C#](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp)
@@ -24,6 +30,12 @@ This folder contains C# sample for Azure Video Analyzer's preview feature of ing
 1. [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) on your development machine.
 
 1. RTSP [capable camera](https://aka.ms/service-supported-cameras) and the RTSP server on this camera needs to be hidden behind a firewall (not accessible over public internet).
+    * Ensure that camera(s) are on the same network as the edge device
+    * Ensure that you can configure the camera to send video at or below a maximum bandwidth of 3000 Kbps
+
+1. [Create an IoT device](https://review.docs.microsoft.com/en-us/azure/azure-video-analyzer/video-analyzer-docs/cloud/use-remote-device-adapter?branch=release-ignite-video-analyzer#create-an-iot-device)
+
+1. [Create a remote device adapter](https://review.docs.microsoft.com/en-us/azure/azure-video-analyzer/video-analyzer-docs/cloud/use-remote-device-adapter?branch=release-ignite-video-analyzer#create-a-remote-device-adapter)
 
 ### Setup
 
