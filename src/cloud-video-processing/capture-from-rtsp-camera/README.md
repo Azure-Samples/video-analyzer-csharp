@@ -28,7 +28,7 @@ This folder contains a C# sample to capture and record live video from an RTSP c
 ### Setup
 
 - Open your local clone of this git repository in Visual Studio Code.
-- Go to `src\cloud-video-processing\ingest-from-rtsp-camera\Program.cs` and provide values for the following variables:
+- Go to `src\cloud-video-processing\capture-from-rtsp-camera\Program.cs` and provide values for the following variables:
 
 | Variable       | Description                                |
 |----------------------|--------------------------------------------|
@@ -41,11 +41,12 @@ This folder contains a C# sample to capture and record live video from an RTSP c
 | AuthenticationEndpoint | Provide authentication end point (example: https://login.microsoftonline.com) |
 | ArmEndPoint | Provide ARM end point (example: https://management.azure.com) |
 | TokenAudience | Provide token audience (example: https://management.core.windows.net) |
-| PublicCameraIngestionSourceRTSPURL | Provide RTSP source url  |
-| PublicCameraIngestionSourceRTSPUserName | Provide RTSP source username |
-| PublicCameraIngestionSourceRTSPPassword | Provide RTSP source password |
+| PublicCameraSourceRTSPURL | Provide RTSP source url  |
+| PublicCameraSourceRTSPUserName | Provide RTSP source username |
+| PublicCameraSourceRTSPPassword | Provide RTSP source password |
+| PublicCameraVideoName | Provide unique camera name to capture live video |
 
-- Optionally, you can provide custom values for topology and pipeline parameters, defined just below the variables mentioned in the table (lines 36 - 44).
+- Optionally, you can provide custom values for topology and pipeline parameters, defined just below the variables mentioned in the table (lines 36 - 43).
 - Save the changes.
 
 ### Code walkthrough
@@ -71,7 +72,7 @@ public static async Task Main(string[] args)
 
     1. On successful creation of that topology, a [live pipeline](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/pipeline) is created in `CreateLivePipelineForPublicCameraAsync()` method using: 
         * Topology and Pipeline names defined in the variables section during setup.
-        *  `bitrateKbps` - Bitrate is set to 1500 kbps by default in line 276.This represents the maximum bitrate for the RTSP camera, and it must be between 500 and 3000 Kbps. If bitrate of the live video from the camera exceeds this threshold, then the service will keep disconnecting from the camera, and retrying later - with exponential backoff.
+        *  `bitrateKbps` - Bitrate is set to 1500 kbps by default in line 275. This represents the maximum bitrate for the RTSP camera, and it must be between 500 and 3000 Kbps. If bitrate of the live video from the camera exceeds this threshold, then the service will keep disconnecting from the camera, and retrying later - with exponential backoff.
 
     1. If the pipeline is created successfully, it is then activated using ActivateLivePipelineAsync() method. This will start the flow of live video.
  
@@ -81,14 +82,14 @@ Once you have the configuration steps completed, you can run the program.
 
 - Start a debugging session (hit F5). You will start seeing some messages printed in the TERMINAL window regarding topology and pipeline creation. If the creation is successful, the live pipeline is activated and you can go to the Azure portal to view the video. 
 - Login to [Azure portal](https://portal.azure.com/), go to the Video Analyzer account being used for this project.
-- Click on the Videos blade and choose the video created. Default video name is **PubIngestionPipeline-1-camera-001** stored in variable `PublicCameraIngestionSinkVideoName` in line 38. The video should be in a `In Use` status. Click on the video, and you should see a [low latency stream](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/playback-recordings-how-to.md#low-latency-streaming) of the live video from the camera.
+- Click on the Videos blade and choose the video created. The video should be in a `In Use` status. Click on the video, and you should see a [low latency stream](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/playback-recordings-how-to.md#low-latency-streaming) of the live video from the camera.
 - Go back to Visual Studio Code TERMINAL window and press enter to deactivate the pipeline and cleanup the resources including pipeline and topology. The recording is persisted and status changes to `Not recording`.
 
-❗**Note:** When running the debugger with the cloud-video-processing/ingest-from-rtsp-camera project, the default launch.json creates a configuration with the parameter "console": "internalConsole". This does not work since internalConsole does not allow keyboard input. Changing the parameter to "console" : "integratedTerminal" fixes the problem.
+❗**Note:** When running the debugger with the cloud-video-processing/capture-from-rtsp-camera project, the default launch.json creates a configuration with the parameter "console": "internalConsole". This does not work since internalConsole does not allow keyboard input. Changing the parameter to "console" : "integratedTerminal" fixes the problem.
 
 ### Next steps
 
-- [Export a portion of the recorded video as an MP4 file](../../src/video-export)
+- [Export a portion of the recorded video as an MP4 file](../src/video-export)
 - Try the quickstart to create a live pipeline [using Azure portal](https://aka.ms/cloudpipeline)
 - Learn more about [live and batch pipelines](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/pipeline)
 - [Quotas and limitations](https://aka.ms/livequota) on live pipelines
