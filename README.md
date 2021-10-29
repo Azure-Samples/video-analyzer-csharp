@@ -5,12 +5,12 @@ languages:
 products:
   - azure
   - azure-video-analyzer
-description: "The samples in this repo show how to use the Azure Video Analyzer service to record video using a RTSP capable camera and export portion of recording as an MP4 file."  
+description: "The samples in this repo show how to use the Azure Video Analyzer service to capture, record, and playback live video from an RTSP capable camera and export portion of the video recording as an MP4 file."  
 ---
 
 # Azure Video Analyzer samples
 
-This repository contains C# samples for Azure Video Analyzer
+This repository contains C# samples for Azure Video Analyzer.
 
 ## Contents
 
@@ -25,14 +25,14 @@ This repository contains C# samples for Azure Video Analyzer
 
 The 'src' folder contains the following sub-folders:
 
-* **cloud-video-processing** - This folder contains a dotnet core console app that enables you to ingest videos from rtsp camera.
+* **cloud-video-processing** - This folder contains .NET Core console apps that enable you to capture and record live video from an RTSP-capable camera.
 
-* **video-consumption** - This folder contains two parts:
+* **video-consumption** - This folder contains two samples:
  
-    * **token-issuer**: an application for generating [JSON Web Tokens](https://datatracker.ietf.org/doc/html/rfc7519). The output can then be used with the Video Analyzer [player widgets](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/player-widget) for playback of video recordings.
-    * **video-player**: This folder contains a ReactJS app that will enable you to view videos and create zones (line or polygon) using the Video Analyzer player widget.
+    * **token-issuer**: An application for generating [JSON Web Tokens](https://datatracker.ietf.org/doc/html/rfc7519). The output can then be used with the Video Analyzer [player widgets](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/player-widget) for playback of video.
+    * **video-player**: This folder contains a ReactJS app that will enable you to view videos and create zones (lines or polygons) using the Video Analyzer player widget.
 
-* **video-export** - This folder has a source code to export portion of a recorded video as an MP4 file.
+* **video-export** - This folder contains a .NET Core console app that enables you to export a portion of a recorded video as an MP4 file.
 
 ## Prerequisites
 
@@ -62,16 +62,16 @@ After cloning the repository, follow instructions outlined in each folder to set
 
 ## Next steps
 
-* [Ingest videos from RTSP camera behind a firewall](./src/cloud-video-processing/ingest-from-rtsp-camera-behind-firewall) 
-* [Ingest videos from RTSP camera accessible on the internet](./src/cloud-video-processing/ingest-from-rtsp-camera)
-* [Export a portion of recorded video as an MP4 file](./src/video-export)
-* Generate [JSON Web Token](./src/video-consumption/token-issuer) to use with [Video Analyzer widget player](./src/video-consumption/video-player)
+* [Ingest videos from an RTSP camera behind a firewall](./src/cloud-video-processing/ingest-from-rtsp-camera-behind-firewall) 
+* [Ingest videos from an RTSP camera accessible on the internet](./src/cloud-video-processing/ingest-from-rtsp-camera)
+* [Export a portion of a recorded video as an MP4 file](./src/video-export)
+* Generate a [JSON Web Token](./src/video-consumption/token-issuer) to use with [Video Analyzer widget player](./src/video-consumption/video-player)
 
-## Key concepts
+## Related links
 
-- [Azure Video Analyzer SDK](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/videoanalyzer): contains the source code for Azure Video analyzer C# SDK
-- [Azure Video Analyzer Documentation](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/overview)
-- Get started with [Video Analyzer cloud pipeline](https://aka.ms/cloudpipeline)
+- [Video Analyzer SDK](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/videoanalyzer): contains the source code for Video Analyzer C# SDK
+- [Video Analyzer Documentation](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/overview)
+- Get started with [Video Analyzer service](https://aka.ms/cloudpipeline)
 
 ## Code of conduct
 
