@@ -1,10 +1,10 @@
-# Azure Video Analyzer samples for ingestion from a RTSP camera
+# Azure Video Analyzer samples for capturing and recording live video from an RTSP camera
 
-This folder contains C# sample for Azure Video Analyzer's preview features of video ingestion from RTSP capable camera.
+This folder contains C# samples for capturing and recording live video from an RTSP capable camera using Video Analyzer.
 
 ### Contents
 
 | File/folder       | Description                                |
 |----------------------|--------------------------------------------|
-| `ingest-from-rtsp-camera`                | Sample source code for ingestion from a rtsp camera accessible over public internet.                        |
-| `ingest-from-rtsp-camera-behind-firewall`         | Sample source code for ingestion from a rtsp camera behind a firewall.     |
+| `ingest-from-rtsp-camera`                | Console app that enables you to capture and record live video from an RTSP-capable camera accessible over public internet.    |
+| `ingest-from-rtsp-camera-behind-firewall`         | Console app that enables you to capture and record live video from an RTSP-capable camera behind a firewall.     |
