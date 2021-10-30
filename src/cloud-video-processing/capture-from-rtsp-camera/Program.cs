@@ -32,7 +32,7 @@ namespace PublicCameraPipelineSampleCode
         private const string PublicCameraSourceRTSPURL = "<Provide RTSP source url>";
         private const string PublicCameraSourceRTSPUserName = "<Provide RTSP source username>";
         private const string PublicCameraSourceRTSPPassword = "<Provide RTSP source password>";
-        private const string PublicCameraVideoName = "<Provide unique camera name>";
+        private const string PublicCameraVideoName = "<Provide unique video name to capture live video from this RTSP source>";
         private const string PublicCameraTopologyName = "PublicCameraTopology-1";
         private const string PublicCameraPipelineName = "PublicCameraPipeline-1";
 

@@ -29,19 +29,18 @@ namespace ExportBatchPipelineJobSampleCode
         private static Uri ArmEndPoint = new Uri("<Provide arm end point here>");
         private static Uri TokenAudience = new Uri("<Provide token audience>");
 
-        // public camera ingestion parameters for pipeline setup
-        private const string PublicCameraIngestionSourceRTSPURL = "<Provide RTSP source url>";
-        private const string PublicCameraIngestionSourceRTSPUserName = "<Provide RTSP source username>";
-        private const string PublicCameraIngestionSourceRTSPPassword = "<Provide RTSP source password>";
-
-        private const string PublicCameraIngestionTopologyName = "PublicIngestionTopology-1";
-        private const string PublicCameraIngestionPipelineName = "PublicIngestionPipeline-1";
-        private const string PublicCameraIngestionSinkVideoName = PublicCameraIngestionPipelineName + "-camera-001";
+        // public camera parameters for pipeline setup
+        private const string PublicCameraSourceRTSPURL = "<Provide RTSP source url>";
+        private const string PublicCameraSourceRTSPUserName = "<Provide RTSP source username>";
+        private const string PublicCameraSourceRTSPPassword = "<Provide RTSP source password>";
+        private const string SourceVideoName = "<Provide unique video name to capture live video from this RTSP source>";
+        private const string PublicCameraTopologyName = "PublicTopology-1";
+        private const string PublicCameraPipelineName = "PublicPipeline-1";        
 
         // batch export pipeline parameters
         private const string ExportBatchTopologyName = "ExportBatchTopology-1";
         private const string PipelineJobName = "PipelineJob-1";
-        private const string PipelineExportedVideoName = PipelineJobName + "-camera-001";
+        private const string PipelineExportedVideoName = "batch-pipeline-exported-video";
 
         // parameter names
         private const string RtspUserNameParameterName = "rtspUserNameParameter";
@@ -73,8 +72,8 @@ namespace ExportBatchPipelineJobSampleCode
                 // start ingesting to create video for export
                 // if a source video is already available then this can be skipped
                 // and its name can directly be passed as a parameter along with the time range in CreatePipelineJobAsync.               
-                Console.WriteLine($"Setting up live pipeline ingestion to create source video for export");
-                await SetupIngestionToCreateSourceVideoForExportAsync();
+                Console.WriteLine($"Setting up live pipeline to create source video for export");
+                await SetupToCreateSourceVideoForExportAsync();
 
                 // wait for 10 secs before kicking off the batch pipeline job to have a clip exported for 5 secs.
                 await Task.Delay(TimeSpan.FromSeconds(clipDurationInSec * 2));
@@ -90,7 +89,7 @@ namespace ExportBatchPipelineJobSampleCode
                 await CreateTopologyForBatchExportAsync();
                 Console.WriteLine($"Created topology '{ExportBatchTopologyName}'");                
 
-                await CreatePipelineJobAsync(PublicCameraIngestionSinkVideoName, range);
+                await CreatePipelineJobAsync(SourceVideoName, range);
                 Console.WriteLine($"Created pipeline job '{PipelineJobName}'");
 
                 if (await WaitForPipelineJobToBeCompletedAsync())
@@ -120,35 +119,35 @@ namespace ExportBatchPipelineJobSampleCode
         }
 
         /// <summary>
-        /// Setup the ingestion to create a source video for export.
+        /// Setup to create a source video for export.
         /// </summary>
         /// <returns>The completion task.</returns>
-        private static async Task SetupIngestionToCreateSourceVideoForExportAsync()
+        private static async Task SetupToCreateSourceVideoForExportAsync()
         {
             await CreateTopologyForPublicCameraAsync();
             await CreateLivePipelineForPublicCameraAsync();
-            await ActivateLivePipelineAsync(PublicCameraIngestionPipelineName);
+            await ActivateLivePipelineAsync(PublicCameraPipelineName);
         }
 
         /// <summary>
-        /// Creates a topology for public camera ingestion.
+        /// Creates a topology to capture and record from public camera.
         /// </summary>
         /// <returns>The completion task.</returns>
         private static async Task CreateTopologyForPublicCameraAsync()
         {
             var topologyModel = CreatePipelineTopologyModelForPublicCamera();
 
-            await videoAnalyzerClient.PipelineTopologies.CreateOrUpdateAsync(ResourceGroupName, AccountName, PublicCameraIngestionTopologyName, topologyModel);
+            await videoAnalyzerClient.PipelineTopologies.CreateOrUpdateAsync(ResourceGroupName, AccountName, PublicCameraTopologyName, topologyModel);
         }
 
         /// <summary>
-        /// Creates a live pipeline for public camera ingestion.
+        /// Creates a live pipeline for public camera.
         /// </summary>
         /// <returns>The completion task.</returns>
         private static async Task CreateLivePipelineForPublicCameraAsync()
         {
-            var pipelineModel = CreateLivePipelineModelForPublicIngestion();
-            await videoAnalyzerClient.LivePipelines.CreateOrUpdateAsync(ResourceGroupName, AccountName, PublicCameraIngestionPipelineName, pipelineModel);
+            var pipelineModel = CreateLivePipelineModelForPublicCamera();
+            await videoAnalyzerClient.LivePipelines.CreateOrUpdateAsync(ResourceGroupName, AccountName, PublicCameraPipelineName, pipelineModel);
         }
 
         /// <summary>
@@ -235,7 +234,7 @@ namespace ExportBatchPipelineJobSampleCode
             await videoAnalyzerClient.PipelineTopologies.DeleteAsync(ResourceGroupName, AccountName, ExportBatchTopologyName);
             Console.WriteLine($"deleted batch topology '{ExportBatchTopologyName}'");
 
-            await CleanupLivePipelineResources(PublicCameraIngestionTopologyName, PublicCameraIngestionPipelineName);
+            await CleanupLivePipelineResources(PublicCameraTopologyName, PublicCameraPipelineName);
         }
 
         /// <summary>
@@ -320,13 +319,13 @@ namespace ExportBatchPipelineJobSampleCode
         }
 
         /// <summary>
-        /// Create a pipeline topology object for ingestion from a public camera.
+        /// Create a pipeline topology object for a public camera.
         /// </summary>
         /// <returns>A task with the pipeline topology.</returns>
         private static PipelineTopology CreatePipelineTopologyModelForPublicCamera()
         {
             return new PipelineTopology(
-                name: PublicCameraIngestionTopologyName,
+                name: PublicCameraTopologyName,
                 description: "Sample pipeline topology for capture, record, and stream live video from a camera that is accessible over the internet",
                 kind: Kind.Live,
                 sku: new Sku(SkuName.LiveS1),
@@ -383,8 +382,8 @@ namespace ExportBatchPipelineJobSampleCode
                         },
                         VideoCreationProperties = new VideoCreationProperties
                         {
-                            Title = "Sample ingestion from a public rtsp camera",
-                            Description = "Sample video ingestion from a rtsp camera that is accessible over the public internet",
+                            Title = "Capture and record live video from an RTSP-capable camera",
+                            Description = "Sample to capture and record live video from an RTSP-capable camera accessible over the public internet",
                         },
                     },
                 });
@@ -475,12 +474,12 @@ namespace ExportBatchPipelineJobSampleCode
         /// </summary>
         /// <param name="description">description of the livepipeline.</param>
         /// <returns>Livepipeline.</returns>
-        private static LivePipeline CreateLivePipelineModelForPublicIngestion(string description = null)
+        private static LivePipeline CreateLivePipelineModelForPublicCamera(string description = null)
         {
             return new LivePipeline(
-              name: PublicCameraIngestionPipelineName,
+              name: PublicCameraPipelineName,
               description: description,
-              topologyName: PublicCameraIngestionTopologyName,
+              topologyName: PublicCameraTopologyName,
               // Maximum capacity in Kbps which is reserved for the live pipeline.
               // if the rtsp source exceeds the capacity, then the service will disconnect temporarily from the camera
               // and will try again to check if camera bitrate is now below the reserved capacity.
@@ -488,10 +487,10 @@ namespace ExportBatchPipelineJobSampleCode
               bitrateKbps: 1500,
               parameters: new List<ParameterDefinition>
               {
-                    new ParameterDefinition(RtspUserNameParameterName, PublicCameraIngestionSourceRTSPUserName),
-                    new ParameterDefinition(RtspPasswordParameterName, PublicCameraIngestionSourceRTSPPassword),
-                    new ParameterDefinition(RtspUrlParameterName, PublicCameraIngestionSourceRTSPURL),
-                    new ParameterDefinition(VideoNameParameterName, PublicCameraIngestionSinkVideoName),
+                    new ParameterDefinition(RtspUserNameParameterName, PublicCameraSourceRTSPUserName),
+                    new ParameterDefinition(RtspPasswordParameterName, PublicCameraSourceRTSPPassword),
+                    new ParameterDefinition(RtspUrlParameterName, PublicCameraSourceRTSPURL),
+                    new ParameterDefinition(VideoNameParameterName, SourceVideoName),
               });
         }
 

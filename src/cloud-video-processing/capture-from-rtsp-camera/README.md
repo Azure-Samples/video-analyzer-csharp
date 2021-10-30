@@ -41,10 +41,10 @@ This folder contains a C# sample to capture and record live video from an RTSP c
 | AuthenticationEndpoint | Provide authentication end point (example: https://login.microsoftonline.com) |
 | ArmEndPoint | Provide ARM end point (example: https://management.azure.com) |
 | TokenAudience | Provide token audience (example: https://management.core.windows.net) |
-| PublicCameraSourceRTSPURL | Provide RTSP source url  |
+| PublicCameraSourceRTSPURL | Provide RTSP source URL  |
 | PublicCameraSourceRTSPUserName | Provide RTSP source username |
 | PublicCameraSourceRTSPPassword | Provide RTSP source password |
-| PublicCameraVideoName | Provide unique camera name to capture live video |
+| PublicCameraVideoName | Provide unique video name to capture live video from this RTSP source |
 
 - Optionally, you can provide custom values for topology and pipeline parameters, defined just below the variables mentioned in the table (lines 36 - 43).
 - Save the changes.
