@@ -41,13 +41,14 @@ This folder contains a .NET Core console app that enables you to export a portio
 | AuthenticationEndpoint | Provide authentication end point (example: https://login.microsoftonline.com) |
 | ArmEndPoint | Provide ARM end point (example: https://management.azure.com) |
 | TokenAudience | Provide token audience (example: https://management.core.windows.net) |
-| PublicCameraIngestionSourceRTSPURL *(optional)* | Provide RTSP source url  |
-| PublicCameraIngestionSourceRTSPUserName *(optional)* | Provide RTSP source username |
-| PublicCameraIngestionSourceRTSPPassword *(optional)* | Provide RTSP source password |
+| PublicCameraSourceRTSPURL *(optional)* | Provide RTSP source url  |
+| PublicCameraSourceRTSPUserName *(optional)* | Provide RTSP source username |
+| PublicCameraSourceRTSPPassword *(optional)* | Provide RTSP source password |
+| SourceVideoName | Provide source video name for export |
 
 **NOTE: If you already have a video recording in your Video Analyzer account**, the 3 RTSP parameters in the table are optional. See the [`Use existing video`](#use-existing-video) section for the necessary code changes.
 
-- Optionally, you can provide custom values for the pipeline parameters and parameter names, defined just below the variables mentioned in the table (lines 42 - 53).
+- Optionally, you can provide custom values for the pipeline parameters and parameter names, defined just below the variables mentioned in the table (lines 37 - 52).
 - Save the changes.
 
 ### Code walkthrough
@@ -68,10 +69,10 @@ public static async Task Main(string[] args)
 - RunExportBatchAsync() method is used to run a pipeline job for exporting a portion of the video recording as an MP4 file. This method does the following:
 
     1. Start capturing and recording live video from the RTSP camera that is accessible over the internet
-        * SetupIngestionToCreateSourceVideoForExportAsync() method starts recording live video from the RTSP camera at `PublicCameraIngestionSourceRTSPURL`.
-        * If a video recording is already available in your Video Analyzer account(the video resource should be of type `archive`), then this step can be skipped and name of the  video resource can be directly passed as a parameter along with the time range in CreatePipelineJobAsync() in line 93. See [Use existing video](#use-existing-video) section for the necessary code changes.
+        * SetupToCreateSourceVideoForExportAsync() method starts recording live video from the RTSP camera at `PublicCameraSourceRTSPURL`.
+        * If a video recording is already available in your Video Analyzer account(the video resource should be of type `archive`), then this step can be skipped and name of the video resource can be directly passed as a parameter along with the time range in CreatePipelineJobAsync() in line 92. See [Use existing video](#use-existing-video) section for the necessary code changes.
 
-    1. Using the video recorded in above step as the source, create a [batch pipeline topology](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/pipeline).
+    1. Using the video recorded in above step as the source, create a [batch pipeline topology](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/pipeline#batch-pipeline).
         * CreateTopologyForBatchExportAsync() method creates that topology with the following nodes:
             *  Video source node
             *  Encoder processor node - with a System Preset configuration. More details [here](#encoder-processor-node).
@@ -79,27 +80,27 @@ public static async Task Main(string[] args)
 
     1. On successful creation of the topology, a pipeline job is created and activated.
         * CreatePipelineJobAsync() method takes 2 parameters:
-            *  `PublicCameraIngestionSinkVideoName` - source video name, either created programmatically in step 1 or the name provided by you. Make sure that you provide a video resource that is available in the Video Analyzer account and is in an `archive` state. 
-            *  `range` - The time sequence, that is the start and end timestamp of the portion of the recorded video to be exported, which is specified in UTC time. The maximum span of the time sequence (end timestamp - start timestamp) must be less than or equal to 24 hours. Default value is 5 seconds.
+            *  `PublicCameraVideoName` - source video name, either created programmatically in step 1 or the name provided by you. Make sure that you provide a video resource that is available in the Video Analyzer account and is in an `archive` state. 
+            *  `range` - The time sequence, that is the start and end timestamp of the portion of the recorded video to be exported, which is specified in UTC time. The maximum span of the time sequence (end timestamp - start timestamp) must be less than or equal to 24 hours. Default value is 5 seconds which can be modified by updating `clipDurationInSec` variable in line 69.
 
-    1. On successful completion of the pipeline job, a new video resource named `PipelineExportedVideoName` is added to your Video Analyzer account, as type `file`.
+    1. On successful completion of the pipeline job, a new video resource named **batch-pipeline-exported-video** is added to your Video Analyzer account, as type `file`. Make sure to change the variable `PipelineExportedVideoName` in line 43 on subsequent runs.
 
 ### Running the sample
 
 Once you have the configuration steps completed, you can run the program.
 
-- Start a debugging session. You can set this project as default project to run on hitting F5 by modifying the launch.json and tasks.json files in .vscode folder. Alternatively, go to TERMINAL window in the Visual Studio Code, navigate using cd src/video-export. Type commands `dotnet build` and `dotnet run` to compile and run the program respectively.  
+- Start a debugging session. You can set this project as default project to run on hitting F5 by modifying the launch.json and tasks.json files in .vscode folder. Alternatively, go to TERMINAL window in the Visual Studio Code, navigate using `cd <path>` to src/video-export. Type commands `dotnet build` and `dotnet run` to compile and run the program respectively.  
 - You will start seeing some messages printed in the TERMINAL window regarding creation of the topologies and pipelines. If the job is successful, you can go to the Azure portal to download the MP4 file. 
 - Login to [Azure portal](https://portal.azure.com/), go to the Video Analyzer account being used for this project.
-- Click on Videos blade and choose the video resource created by the pipeline job. The default video name is **PipelineJob-1-camera-001**, stored in the variable `PipelineExportedVideoName` in line 44. Click on the video, and it will trigger a download and playback in the browser window. Alternatively, you can download the file.
+- Click on Videos blade and choose the video resource created by the pipeline job. The default video name is **batch-pipeline-exported-video**, stored in the variable `PipelineExportedVideoName` in line 43. Click on the video, and it will trigger a download and playback in the browser window. Alternatively, you can download the file.
 - Go back to Visual Studio Code TERMINAL window and press enter to cleanup the resources including the pipelines and topologies. The exported MP4 file is persisted.
 
 ### Use existing video
 
 If a video recording is already available in your Video Analyzer account (should be of type `archive`), then -
  
-* You can skip the step to create an ingestion pipeline in SetupIngestionToCreateSourceVideoForExportAsync() method. To skip this step, comment the code from lines 76 to 88 as shown in the screenshot.
-* In CreatePipelineJobAsync() method at line 93, replace `PublicCameraIngestionSinkVideoName` with the name of the video resource and set the `range` to a suitable time range that matches the timeline of the recorded video as shown in the screenshot. 
+* You can skip the step to create a live pipeline in SetupToCreateSourceVideoForExportAsync() method. To skip this step, comment the code from lines 75 to 87 as shown in the screenshot.
+* In CreatePipelineJobAsync() method at line 92, set the `range` to a suitable time range that matches the timeline of the recorded video as shown in the screenshot. Time range should be specified as [start time, end time] in the format `[[\"YYYY-MM-DDThh:mm:ssZ\",\"YYYY-MM-DDThh:mm:ssZ\"]]`.  
 
 <br>
 <p align="left">
@@ -170,6 +171,6 @@ Preset = new EncoderCustomPreset
 
 ### Next steps
 
-- Try the tutorial to export a portion of recorded video as an MP4 file [using Azure portal](https://aka.ms/export-to-mp4).
-- Learn more about [live and batch pipelines](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/pipeline).
-- [Quotas and limitations](https://aka.ms/livequota) on batch pipelines.
+- Try the tutorial to export a portion of recorded video as an MP4 file [using Azure portal](https://aka.ms/export-to-mp4)
+- Learn more about [live and batch pipelines](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/pipeline)
+- [Quotas and limitations](https://aka.ms/livequota) on batch pipelines
