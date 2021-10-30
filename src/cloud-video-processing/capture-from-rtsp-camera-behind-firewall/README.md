@@ -40,7 +40,7 @@ Azure Video Analyzer sample to capture and record live video from an RTSP camera
 ### Setup
 
 - Open your local clone of this git repository in Visual Studio Code.
-- Go to `src\cloud-video-processing\ingest-from-rtsp-camera-behind-firewall\Program.cs` and provide values for the following variables:
+- Go to `src\cloud-video-processing\capture-from-rtsp-camera-behind-firewall\Program.cs` and provide values for the following variables:
 
 | Variable       | Description                                |
 |----------------------|--------------------------------------------|

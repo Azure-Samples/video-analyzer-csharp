@@ -62,8 +62,8 @@ After cloning the repository, follow instructions outlined in each folder to set
 
 ## Next steps
 
-* [Ingest videos from an RTSP camera behind a firewall](./src/cloud-video-processing/ingest-from-rtsp-camera-behind-firewall) 
-* [Ingest videos from an RTSP camera accessible on the internet](./src/cloud-video-processing/ingest-from-rtsp-camera)
+* [Ingest videos from an RTSP camera behind a firewall](./src/cloud-video-processing/capture-from-rtsp-camera-behind-firewall) 
+* [Ingest videos from an RTSP camera accessible on the internet](./src/cloud-video-processing/capture-from-rtsp-camera)
 * [Export a portion of a recorded video as an MP4 file](./src/video-export)
 * Generate a [JSON Web Token](./src/video-consumption/token-issuer) to use with [Video Analyzer widget player](./src/video-consumption/video-player)
 

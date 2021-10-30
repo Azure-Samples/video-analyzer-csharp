@@ -6,5 +6,5 @@ This folder contains C# samples for capturing and recording live video from an R
 
 | File/folder       | Description                                |
 |----------------------|--------------------------------------------|
-| `ingest-from-rtsp-camera`                | Console app that enables you to capture and record live video from an RTSP-capable camera accessible over public internet.    |
-| `ingest-from-rtsp-camera-behind-firewall`         | Console app that enables you to capture and record live video from an RTSP-capable camera behind a firewall.     |
+| `capture-from-rtsp-camera`                | Console app that enables you to capture and record live video from an RTSP-capable camera accessible over public internet.    |
+| `capture-from-rtsp-camera-behind-firewall`         | Console app that enables you to capture and record live video from an RTSP-capable camera behind a firewall.     |
