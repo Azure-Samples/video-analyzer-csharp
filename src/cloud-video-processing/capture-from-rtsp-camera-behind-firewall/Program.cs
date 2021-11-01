@@ -285,7 +285,7 @@ namespace PrivateCameraPipelineSampleCode
                     new ParameterDefinition(RtspUserNameParameterName, PrivateCameraSourceRTSPUserName),
                     new ParameterDefinition(RtspPasswordParameterName, PrivateCameraSourceRTSPPassword),
                     new ParameterDefinition(RtspUrlParameterName, PrivateCameraSourceRTSPURL),
-                    new ParameterDefinition(VideoNameParameterName, PrivateCameraSinkVideoName),
+                    new ParameterDefinition(VideoNameParameterName, PrivateCameraVideoName),
               });
         }
     }
