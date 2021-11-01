@@ -94,7 +94,11 @@ public static async Task Main(string[] args)
 
 Once you have the configuration steps completed, you can run the program.
 
-- Start a debugging session. You can set this project as default project to run on hitting F5 by modifying the launch.json and tasks.json files in .vscode folder. Alternatively, go to TERMINAL window in the Visual Studio Code, navigate using `cd <path>` to src/cloud-video-processing/capture-from-rtsp-camera-behind-firewall folder. Type commands `dotnet build` and `dotnet run` to compile and run the program respectively. 
+- Start a debugging session. 
+    * You can set this project as default project to run on hitting F5 by modifying the files in .vscode folder. Learn more [here](https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md).
+        * `launch.json` - Update the **"program"** and **"cwd"** to launch PrivateCameraPipelineSampleCode.
+        * `tasks.json` - Update **"args"** to point to PrivateCameraPipelineSampleCode.csproj.
+    * Alternatively, go to TERMINAL window in the Visual Studio Code, navigate using `cd <path>` to src/cloud-video-processing/capture-from-rtsp-camera-behind-firewall folder. Type commands `dotnet build` and `dotnet run` to compile and run the program respectively.
 - You will start seeing some messages printed in the TERMINAL window regarding topology and pipeline creation. If the creation is successful, the live pipeline is activated and you can go to the Azure portal to view the video.
 - Login to [Azure portal](https://portal.azure.com/), go to the Video Analyzer account being used for this project.
 - Click on Videos blade and choose the video created. The video will be in an `In use` status.  Click on the video, and you should see a [low latency stream](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/playback-recordings-how-to.md#low-latency-streaming) of the live video from the camera.

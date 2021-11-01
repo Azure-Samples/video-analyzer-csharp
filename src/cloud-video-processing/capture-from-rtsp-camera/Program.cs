@@ -68,7 +68,7 @@ namespace PublicCameraPipelineSampleCode
                 Console.WriteLine($"Activating pipeline '{PublicCameraPipelineName}'");
                 await ActivateLivePipelineAsync(PublicCameraPipelineName);
                 
-                Console.WriteLine($"Pipeline '{PublicCameraPipelineName}' is activated, please go to portal to play the video '{PublicCameraSinkVideoName}'");
+                Console.WriteLine($"Pipeline '{PublicCameraPipelineName}' is activated, please go to portal to play the video '{PublicCameraVideoName}'");
 
                 Console.WriteLine("Press enter to deactivate the pipeline and cleanup the resources");
 
