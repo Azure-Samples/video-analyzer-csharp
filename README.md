@@ -5,12 +5,12 @@ languages:
 products:
   - azure
   - azure-video-analyzer
-description: "The samples in this repo show how to use the Azure Video Analyzer module to record video in the cloud."  
+description: "The samples in this repo show how to use the Azure Video Analyzer service to capture, record, and playback live video from an RTSP capable camera and export portion of the video recording as an MP4 file."  
 ---
 
 # Azure Video Analyzer samples
 
-This repository contains C# samples for Azure Video Analyzer
+This repository contains C# samples for Azure Video Analyzer.
 
 ## Contents
 
@@ -25,51 +25,54 @@ This repository contains C# samples for Azure Video Analyzer
 
 The 'src' folder contains the following sub-folders:
 
-* **cloud-video-processing** - This folder contains a dotnet core console app that enables you to ***To-do***.
-* **video-export** - This folder has a ***To-do***.
-* **video-consumption** - This folder contains two parts:
+* **cloud-video-processing** - This folder contains .NET Core console apps that enable you to capture and record live video from an RTSP-capable camera.
+
+* **video-consumption** - This folder contains two samples:
  
-    * **token-issuer**: an application for generating [JSON Web Tokens](https://datatracker.ietf.org/doc/html/rfc7519). The output can then be used with the [Azure Video Analyzer player widgets](https://docs.microsoft.com/en-us/azure/azure-video-analyzer/video-analyzer-docs/player-widget) for playing back video recordings.
-    * **video-player**: This folder contains a ReactJS app that will enable you to view videos and create zones (line or polygon) using the AVA widget player.
+    * **token-issuer**: An application for generating [JSON Web Tokens](https://datatracker.ietf.org/doc/html/rfc7519). The output can then be used with the Video Analyzer [player widgets](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/player-widget) for playback of video.
+    * **video-player**: This folder contains a ReactJS app that will enable you to view videos and create zones (lines or polygons) using the Video Analyzer player widget.
+
+* **video-export** - This folder contains a .NET Core console app that enables you to export a portion of a recorded video as an MP4 file.
 
 ## Prerequisites
 
-1. An active Azure subscription
-2. Azure resources deployed in the Azure subscription
+1. An Azure account that includes an active subscription. [Create an account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F) for free if you don't already have one.
+    * Get your Azure Active Directory [Tenant Id](https://docs.microsoft.com/azure/active-directory/fundamentals/active-directory-how-to-find-tenant)
+    * Register an application with Microsoft identity platform to get app registration [Client Id](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app#register-an-application) and [Client secret](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app#add-a-client-secret)
 
-    a. Video Analyzer account
+1. Azure resources deployed in the Azure subscription -
+
+    a. [Video Analyzer account](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/create-video-analyzer-account?tabs=portal)
 
     b. Storage account
 
     c. Managed Identity
 
-    d. IoT Hub
-    
+    d. Attach a [new](https://docs.microsoft.com/azure/iot-hub/iot-hub-create-through-portal) or [existing IoT Hub to Video Analyzer](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/create-video-analyzer-account?tabs=portal)
 
-3. [Visual Studio Code](https://code.visualstudio.com/) on your development machine with following extensions
+1. [Visual Studio Code](https://code.visualstudio.com/) on your development machine with following extensions -
+    * [Azure IoT Tools](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools)
+    * [C#](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp)
 
-    a. [Azure IoT Tools](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools)
+1. [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) on your development machine.
 
-    b. [C#](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp)
+## Setup
 
-4. [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) on your development machine
+After cloning the repository, follow instructions outlined in each folder to setup the respective app.
 
-5. [Register App](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app)
+## Next steps
 
-## Setup ***To-do***
+* [Ingest videos from an RTSP camera behind a firewall](./src/cloud-video-processing/capture-from-rtsp-camera-behind-firewall) 
+* [Ingest videos from an RTSP camera accessible on the internet](./src/cloud-video-processing/capture-from-rtsp-camera)
+* [Export a portion of a recorded video as an MP4 file](./src/video-export)
+* Generate a [JSON Web Token](./src/video-consumption/token-issuer) to use with [Video Analyzer widget player](./src/video-consumption/video-player)
 
-After cloning the repository, follow instructions outlined in **src/cloud-to-device-console-app/readme.md** to setup the console app.
+## Related links
 
-## Running the sample ***To-do***
+- [Video Analyzer SDK](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/videoanalyzer): contains the source code for Video Analyzer C# SDK
+- [Video Analyzer Documentation](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/overview)
+- Get started with [Video Analyzer service](https://aka.ms/cloudpipeline)
 
-Follow instructions outlined in **src/cloud-to-device-console-app/readme.md** to run the console app.
+## Code of conduct
 
-## Key concepts
-
-Read [Azure Video Analyzer concepts](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/overview)
-
-## Resources
-
-- [azure video analyzer sdk](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/videoanalyzer): contains the source code for Azure Video analyzer C# SDK.
-- [Azure Video Analyzer Documentation](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/overview)
-- Get started with [Video Analyzer cloud pipeline](https://aka.ms/cloudpipeline)
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/).

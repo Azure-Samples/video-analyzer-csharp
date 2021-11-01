@@ -28,16 +28,16 @@ namespace PrivateCameraPipelineSampleCode
         private static Uri ArmEndPoint = new Uri("<Provide arm end point here>");
         private static Uri TokenAudience = new Uri("<Provide token audience>");
 
-        // private camera ingestion parameters for pipeline setup
-        private const string PrivateCameraIngestionTunnelingDeviceId = "<Provide device Id>";
-        private const string iotHubNameForPrivateCameraIngestion = "<Provide IOT hub name>";
-        private const string PrivateCameraIngestionSourceRTSPURL = "<Provide RTSP source url>";
-        private const string PrivateCameraIngestionSourceRTSPUserName = "<Provide RTSP source username>";
-        private const string PrivateCameraIngestionSourceRTSPPassword = "<Provide RTSP source password>";
+        // private camera parameters for pipeline setup
+        private const string PrivateCameraTunnelingDeviceId = "<Provide device Id>";
+        private const string IotHubNameForPrivateCamera = "<Provide IoT hub name>";
+        private const string PrivateCameraSourceRTSPURL = "<Provide RTSP source url>";
+        private const string PrivateCameraSourceRTSPUserName = "<Provide RTSP source username>";
+        private const string PrivateCameraSourceRTSPPassword = "<Provide RTSP source password>";
+        private const string PrivateCameraVideoName = "<Provide unique video name to capture live video from this RTSP source>";
 
-        private const string PrivateCameraIngestionTopologyName = "PrivIngestionTopology-1";
-        private const string PrivateCameraIngestionPipelineName = "PrivIngestionPipeline-1";
-        private const string PrivateCameraIngestionSinkVideoName = PrivateCameraIngestionPipelineName + "camera-001";
+        private const string PrivateCameraTopologyName = "PrivateTopology-1";
+        private const string PrivateCameraPipelineName = "PrivatePipeline-1";    
 
         // parameter names 
         private const string RtspUserNameParameterName = "rtspUserNameParameter";
@@ -63,21 +63,27 @@ namespace PrivateCameraPipelineSampleCode
             try
             {
                 await CreateTopologyForPrivateCameraAsync();
-                Console.WriteLine($"Created topology '{PrivateCameraIngestionTopologyName}'");
+                Console.WriteLine($"Created topology '{PrivateCameraTopologyName}'");
 
                 await CreateLivePipelineForPrivateCameraAsync();
-                Console.WriteLine($"Created pipeline '{PrivateCameraIngestionPipelineName}'");
+                Console.WriteLine($"Created pipeline '{PrivateCameraPipelineName}'");
 
-                Console.WriteLine($"Activating pipeline '{PrivateCameraIngestionPipelineName}'");
-                await ActivateLivePipelineAsync(PrivateCameraIngestionPipelineName);
+                Console.WriteLine($"Activating pipeline '{PrivateCameraPipelineName}'");
+                await ActivateLivePipelineAsync(PrivateCameraPipelineName);
 
-                Console.WriteLine($"Pipeline '{PrivateCameraIngestionPipelineName}' is activated, please go to portal to play the video '{PrivateCameraIngestionSinkVideoName}'");
+                Console.WriteLine($"Pipeline '{PrivateCameraPipelineName}' is activated, please go to portal to play the video '{PrivateCameraVideoName}'");
 
                 Console.WriteLine("Press enter to deactivate the pipeline and cleanup the resources");
 
                 Console.Read();
             }
-            catch(Exception ex)
+            catch (PipelineResponseException ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Response.Content);
+                Console.ForegroundColor = ConsoleColor.Gray;
+            }
+            catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(ex.ToString());
@@ -96,8 +102,8 @@ namespace PrivateCameraPipelineSampleCode
         /// <returns>The completion task.</returns>
         private static async Task CreateLivePipelineForPrivateCameraAsync()
         {
-            var pipelineModel = CreateLivePipelineModelForPrivateIngestion();
-            await videoAnalyzerClient.LivePipelines.CreateOrUpdateAsync(ResourceGroupName, AccountName, PrivateCameraIngestionPipelineName, pipelineModel);
+            var pipelineModel = CreateLivePipelineModelForPrivateCamera();
+            await videoAnalyzerClient.LivePipelines.CreateOrUpdateAsync(ResourceGroupName, AccountName, PrivateCameraPipelineName, pipelineModel);
         }
 
         /// <summary>
@@ -108,7 +114,7 @@ namespace PrivateCameraPipelineSampleCode
         {
             var topologyModel = CreatePipelineTopologyModelForPrivateCamera();
 
-            await videoAnalyzerClient.PipelineTopologies.CreateOrUpdateAsync(ResourceGroupName, AccountName, PrivateCameraIngestionTopologyName, topologyModel);
+            await videoAnalyzerClient.PipelineTopologies.CreateOrUpdateAsync(ResourceGroupName, AccountName, PrivateCameraTopologyName, topologyModel);
         }
 
         /// <summary>
@@ -127,21 +133,21 @@ namespace PrivateCameraPipelineSampleCode
         /// <returns>The completion task.</returns>
         private static async Task CleanUpResourcesAsync()
         {
-            var response = await GetLivePipelineAsync(PrivateCameraIngestionPipelineName);
+            var response = await GetLivePipelineAsync(PrivateCameraPipelineName);
             if (response != null)
             {
                 if (response.State == LivePipelineState.Active)
                 {
-                    await videoAnalyzerClient.LivePipelines.DeactivateAsync(ResourceGroupName, AccountName, PrivateCameraIngestionPipelineName);
-                    Console.WriteLine($"deactivated pipeline '{PrivateCameraIngestionPipelineName}'");
+                    await videoAnalyzerClient.LivePipelines.DeactivateAsync(ResourceGroupName, AccountName, PrivateCameraPipelineName);
+                    Console.WriteLine($"deactivated pipeline '{PrivateCameraPipelineName}'");
                 }
 
-                await videoAnalyzerClient.LivePipelines.DeleteAsync(ResourceGroupName, AccountName, PrivateCameraIngestionPipelineName);
-                Console.WriteLine($"deleted pipeline '{PrivateCameraIngestionPipelineName}'");
+                await videoAnalyzerClient.LivePipelines.DeleteAsync(ResourceGroupName, AccountName, PrivateCameraPipelineName);
+                Console.WriteLine($"deleted pipeline '{PrivateCameraPipelineName}'");
             }
 
-            await videoAnalyzerClient.PipelineTopologies.DeleteAsync(ResourceGroupName, AccountName, PrivateCameraIngestionTopologyName);
-            Console.WriteLine($"deleted topology '{PrivateCameraIngestionTopologyName}'");
+            await videoAnalyzerClient.PipelineTopologies.DeleteAsync(ResourceGroupName, AccountName, PrivateCameraTopologyName);
+            Console.WriteLine($"deleted topology '{PrivateCameraTopologyName}'");
         }
 
         /// <summary>
@@ -189,8 +195,8 @@ namespace PrivateCameraPipelineSampleCode
         private static PipelineTopology CreatePipelineTopologyModelForPrivateCamera()
         {
             return new PipelineTopology(
-                name: PrivateCameraIngestionTopologyName,
-                description: "The pipeline topology with tunneling between rtsp source and video sink.",
+                name: PrivateCameraTopologyName,
+                description: "Sample pipeline topology for capture, record, and stream live video from a camera that is behind a firewall",
                 kind: Kind.Live,
                 sku: new Sku(SkuName.LiveS1),
                 parameters: new List<ParameterDeclaration>
@@ -233,8 +239,8 @@ namespace PrivateCameraPipelineSampleCode
                             },
                             Tunnel = new SecureIotDeviceRemoteTunnel
                             {
-                                DeviceId = PrivateCameraIngestionTunnelingDeviceId,
-                                IotHubName = iotHubNameForPrivateCameraIngestion,
+                                DeviceId = PrivateCameraTunnelingDeviceId,
+                                IotHubName = IotHubNameForPrivateCamera,
                             },
                         },
                     },
@@ -251,8 +257,8 @@ namespace PrivateCameraPipelineSampleCode
                         },
                         VideoCreationProperties = new VideoCreationProperties
                         {
-                            Title = "Parking Lot (Camera 1)",
-                            Description = "Parking lot south entrance"
+                            Title = "Capture and record live video from an RTSP-capable camera behind a firewall", 
+                            Description = "Sample to capture and record live video from an RTSP-capable camera that is behind a firewall"
                         },
                     },
                 });
@@ -263,23 +269,23 @@ namespace PrivateCameraPipelineSampleCode
         /// </summary>
         /// <param name="description">description of the livepipeline.</param>
         /// <returns>Livepipeline.</returns>
-        private static LivePipeline CreateLivePipelineModelForPrivateIngestion(string description = null)
+        private static LivePipeline CreateLivePipelineModelForPrivateCamera(string description = null)
         {
             return new LivePipeline(
-              name: PrivateCameraIngestionPipelineName,
+              name: PrivateCameraPipelineName,
               description: description,
-              topologyName: PrivateCameraIngestionTopologyName,
+              topologyName: PrivateCameraTopologyName,
               // Maximum capacity in Kbps which is reserved for the live pipeline.
               // if the rtsp source exceeds the capacity, then the service will disconnect temporarily from the camera
               // and will try again to check if camera bitrate is now below the reserved capacity.
               // Allowed range is 500 to 3000 kbps.
-              bitrateKbps: 500,
+              bitrateKbps: 1500,
               parameters: new List<ParameterDefinition>
               {
-                    new ParameterDefinition(RtspUserNameParameterName, PrivateCameraIngestionSourceRTSPUserName),
-                    new ParameterDefinition(RtspPasswordParameterName, PrivateCameraIngestionSourceRTSPPassword),
-                    new ParameterDefinition(RtspUrlParameterName, PrivateCameraIngestionSourceRTSPURL),
-                    new ParameterDefinition(VideoNameParameterName, PrivateCameraIngestionSinkVideoName),
+                    new ParameterDefinition(RtspUserNameParameterName, PrivateCameraSourceRTSPUserName),
+                    new ParameterDefinition(RtspPasswordParameterName, PrivateCameraSourceRTSPPassword),
+                    new ParameterDefinition(RtspUrlParameterName, PrivateCameraSourceRTSPURL),
+                    new ParameterDefinition(VideoNameParameterName, PrivateCameraVideoName),
               });
         }
     }

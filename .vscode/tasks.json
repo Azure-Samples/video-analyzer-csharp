@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/video-consumption/token-issuer/Tools.JwtTokenIssuer.csproj",
+                "${workspaceFolder}/src/cloud-video-processing/capture-from-rtsp-camera/PublicCameraPipelineSampleCode.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/src/video-consumption/token-issuer/Tools.JwtTokenIssuer.csproj",
+                "${workspaceFolder}/src/cloud-video-processing/capture-from-rtsp-camera/PublicCameraPipelineSampleCode.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -32,7 +32,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/src/video-consumption/token-issuer/Tools.JwtTokenIssuer.csproj",
+                "${workspaceFolder}/src/cloud-video-processing/capture-from-rtsp-camera/PublicCameraPipelineSampleCode.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

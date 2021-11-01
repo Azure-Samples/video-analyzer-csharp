@@ -28,14 +28,13 @@ namespace PublicCameraPipelineSampleCode
         private static Uri ArmEndPoint = new Uri("<Provide arm end point here>");
         private static Uri TokenAudience = new Uri("<Provide token audience>");
 
-        // public camera ingestion parameters for pipeline setup
-        private const string PublicCameraIngestionSourceRTSPURL = "<Provide RTSP source url>";
-        private const string PublicCameraIngestionSourceRTSPUserName = "<Provide RTSP source username>";
-        private const string PublicCameraIngestionSourceRTSPPassword = "<Provide RTSP source password>";
-
-        private const string PublicCameraIngestionTopologyName = "PubIngestionTopology-1";
-        private const string PublicCameraIngestionPipelineName = "PubIngestionPipeline-1";
-        private const string PublicCameraIngestionSinkVideoName = PublicCameraIngestionPipelineName + "camera-001";
+        // public camera parameters for pipeline setup
+        private const string PublicCameraSourceRTSPURL = "<Provide RTSP source url>";
+        private const string PublicCameraSourceRTSPUserName = "<Provide RTSP source username>";
+        private const string PublicCameraSourceRTSPPassword = "<Provide RTSP source password>";
+        private const string PublicCameraVideoName = "<Provide unique video name to capture live video from this RTSP source>";
+        private const string PublicCameraTopologyName = "PublicCameraTopology-1";
+        private const string PublicCameraPipelineName = "PublicCameraPipeline-1";
 
         // parameter names
         private const string RtspUserNameParameterName = "rtspUserNameParameter";
@@ -61,21 +60,27 @@ namespace PublicCameraPipelineSampleCode
             try
             {
                 await CreateTopologyForPublicCameraAsync();
-                Console.WriteLine($"Created topology '{PublicCameraIngestionTopologyName}'");
+                Console.WriteLine($"Created topology '{PublicCameraTopologyName}'");
 
                 await CreateLivePipelineForPublicCameraAsync();
-                Console.WriteLine($"Created pipeline '{PublicCameraIngestionPipelineName}'");
+                Console.WriteLine($"Created pipeline '{PublicCameraPipelineName}'");
 
-                Console.WriteLine($"Activating pipeline '{PublicCameraIngestionPipelineName}'");
-                await ActivateLivePipelineAsync(PublicCameraIngestionPipelineName);
+                Console.WriteLine($"Activating pipeline '{PublicCameraPipelineName}'");
+                await ActivateLivePipelineAsync(PublicCameraPipelineName);
                 
-                Console.WriteLine($"Pipeline '{PublicCameraIngestionPipelineName}' is activated, please go to portal to play the video '{PublicCameraIngestionSinkVideoName}'");
+                Console.WriteLine($"Pipeline '{PublicCameraPipelineName}' is activated, please go to portal to play the video '{PublicCameraVideoName}'");
 
                 Console.WriteLine("Press enter to deactivate the pipeline and cleanup the resources");
 
                 Console.Read();
             }
-            catch(Exception ex)
+            catch (PipelineResponseException ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Response.Content);
+                Console.ForegroundColor = ConsoleColor.Gray;
+            }
+            catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(ex.ToString());
@@ -97,7 +102,7 @@ namespace PublicCameraPipelineSampleCode
         {
             var topologyModel = CreatePipelineTopologyModelForPublicCamera();
 
-            await videoAnalyzerClient.PipelineTopologies.CreateOrUpdateAsync(ResourceGroupName, AccountName, PublicCameraIngestionTopologyName, topologyModel);
+            await videoAnalyzerClient.PipelineTopologies.CreateOrUpdateAsync(ResourceGroupName, AccountName, PublicCameraTopologyName, topologyModel);
         }
 
         /// <summary>
@@ -106,8 +111,8 @@ namespace PublicCameraPipelineSampleCode
         /// <returns>The completion task.</returns>
         private static async Task CreateLivePipelineForPublicCameraAsync()
         {
-            var pipelineModel = CreateLivePipelineModelForPublicIngestion();
-            await videoAnalyzerClient.LivePipelines.CreateOrUpdateAsync(ResourceGroupName, AccountName, PublicCameraIngestionPipelineName, pipelineModel);
+            var pipelineModel = CreateLivePipelineModelForPublicCamera();
+            await videoAnalyzerClient.LivePipelines.CreateOrUpdateAsync(ResourceGroupName, AccountName, PublicCameraPipelineName, pipelineModel);
         }
 
         /// <summary>
@@ -126,21 +131,21 @@ namespace PublicCameraPipelineSampleCode
         /// <returns>The completion task.</returns>
         private static async Task CleanUpResourcesAsync()
         {
-            var response = await GetLivePipelineAsync(PublicCameraIngestionPipelineName);
+            var response = await GetLivePipelineAsync(PublicCameraPipelineName);
             if (response != null)
             {
                 if (response.State == LivePipelineState.Active)
                 {
-                    await videoAnalyzerClient.LivePipelines.DeactivateAsync(ResourceGroupName, AccountName, PublicCameraIngestionPipelineName);
-                    Console.WriteLine($"deactivated pipeline '{PublicCameraIngestionPipelineName}'");
+                    await videoAnalyzerClient.LivePipelines.DeactivateAsync(ResourceGroupName, AccountName, PublicCameraPipelineName);
+                    Console.WriteLine($"deactivated pipeline '{PublicCameraPipelineName}'");
                 }
 
-                await videoAnalyzerClient.LivePipelines.DeleteAsync(ResourceGroupName, AccountName, PublicCameraIngestionPipelineName);
-                Console.WriteLine($"deleted pipeline '{PublicCameraIngestionPipelineName}'");
+                await videoAnalyzerClient.LivePipelines.DeleteAsync(ResourceGroupName, AccountName, PublicCameraPipelineName);
+                Console.WriteLine($"deleted pipeline '{PublicCameraPipelineName}'");
             }
 
-            await videoAnalyzerClient.PipelineTopologies.DeleteAsync(ResourceGroupName, AccountName, PublicCameraIngestionTopologyName);
-            Console.WriteLine($"deleted topology '{PublicCameraIngestionTopologyName}'");
+            await videoAnalyzerClient.PipelineTopologies.DeleteAsync(ResourceGroupName, AccountName, PublicCameraTopologyName);
+            Console.WriteLine($"deleted topology '{PublicCameraTopologyName}'");
         }
 
         /// <summary>
@@ -188,8 +193,8 @@ namespace PublicCameraPipelineSampleCode
         private static PipelineTopology CreatePipelineTopologyModelForPublicCamera()
         {
             return new PipelineTopology(
-                name: PublicCameraIngestionTopologyName,
-                description: "The pipeline topology with rtsp source and video sink.",
+                name: PublicCameraTopologyName,
+                description: "Sample pipeline topology for capture, record, and stream live video from a camera that is accessible over the internet",
                 kind: Kind.Live,
                 sku: new Sku(SkuName.LiveS1),
                 parameters: new List<ParameterDeclaration>
@@ -245,8 +250,8 @@ namespace PublicCameraPipelineSampleCode
                         },
                         VideoCreationProperties = new VideoCreationProperties
                         {
-                            Title = "Parking Lot (Camera 1)",
-                            Description = "Parking lot south entrance",
+                            Title = "Capture and record live video from an RTSP-capable camera",
+                            Description = "Sample to capture and record live video from an RTSP-capable camera accessible over the public internet",
                         },
                     },
                 });
@@ -257,12 +262,12 @@ namespace PublicCameraPipelineSampleCode
         /// </summary>
         /// <param name="description">description of the livepipeline.</param>
         /// <returns>Livepipeline.</returns>
-        private static LivePipeline CreateLivePipelineModelForPublicIngestion(string description = null)
+        private static LivePipeline CreateLivePipelineModelForPublicCamera(string description = null)
         {
             return new LivePipeline(
-              name: PublicCameraIngestionPipelineName,
+              name: PublicCameraPipelineName,
               description: description,
-              topologyName: PublicCameraIngestionTopologyName,
+              topologyName: PublicCameraTopologyName,
               // Maximum capacity in Kbps which is reserved for the live pipeline.
               // if the rtsp source exceeds the capacity, then the service will disconnect temporarily from the camera
               // and will try again to check if camera bitrate is now below the reserved capacity.
@@ -270,10 +275,10 @@ namespace PublicCameraPipelineSampleCode
               bitrateKbps: 1500,
               parameters: new List<ParameterDefinition>
               {
-                    new ParameterDefinition(RtspUserNameParameterName, PublicCameraIngestionSourceRTSPUserName),
-                    new ParameterDefinition(RtspPasswordParameterName, PublicCameraIngestionSourceRTSPPassword),
-                    new ParameterDefinition(RtspUrlParameterName, PublicCameraIngestionSourceRTSPURL),
-                    new ParameterDefinition(VideoNameParameterName, PublicCameraIngestionSinkVideoName),
+                    new ParameterDefinition(RtspUserNameParameterName, PublicCameraSourceRTSPUserName),
+                    new ParameterDefinition(RtspPasswordParameterName, PublicCameraSourceRTSPPassword),
+                    new ParameterDefinition(RtspUrlParameterName, PublicCameraSourceRTSPURL),
+                    new ParameterDefinition(VideoNameParameterName, PublicCameraVideoName),
               });
         }
     }

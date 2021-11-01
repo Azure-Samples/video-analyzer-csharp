@@ -1,6 +1,6 @@
-# AVA Video Player
+# Azure Video Analyzer Video Player
 
-This directory contains a ReactJS app that will enable you to view videos using the AVA widget player.
+This directory contains a ReactJS app that will enable you to view videos using the Video Analyzer widget player.
 
 ## Prerequisites
 1. npm
