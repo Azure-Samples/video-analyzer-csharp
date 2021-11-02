@@ -82,14 +82,14 @@ Once you have the configuration steps completed, you can run the program.
 
 - Start a debugging session (hit F5). You will start seeing some messages printed in the TERMINAL window regarding topology and pipeline creation. If the creation is successful, the live pipeline is activated and you can go to the Azure portal to view the video. 
 - Login to [Azure portal](https://portal.azure.com/), go to the Video Analyzer account being used for this project.
-- Click on the Videos blade and choose the video created. The video should be in a `In Use` status. Click on the video, and you should see a [low latency stream](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/playback-recordings-how-to.md#low-latency-streaming) of the live video from the camera.
+- Click on the Videos blade and choose the video created. The video should be in a `In Use` status. Click on the video, and you should see a [low latency stream](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/playback-recordings-how-to#low-latency-streaming) of the live video from the camera.
 - Go back to Visual Studio Code TERMINAL window and press enter to deactivate the pipeline and cleanup the resources including pipeline and topology. The recording is persisted and status changes to `Not recording`.
 
 ❗**Note:** When running the debugger with the cloud-video-processing/capture-from-rtsp-camera project, the default launch.json creates a configuration with the parameter "console": "internalConsole". This does not work since internalConsole does not allow keyboard input. Changing the parameter to "console" : "integratedTerminal" fixes the problem.
 
 ### Next steps
 
-- [Export a portion of the recorded video as an MP4 file](../src/video-export)
+- [Export a portion of the recorded video as an MP4 file](../../src/video-export)
 - Try the quickstart to create a live pipeline [using Azure portal](https://aka.ms/cloudpipeline)
 - Learn more about [live and batch pipelines](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/pipeline)
 - [Quotas and limitations](https://aka.ms/livequota) on live pipelines
