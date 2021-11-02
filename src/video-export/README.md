@@ -90,7 +90,7 @@ public static async Task Main(string[] args)
 Once you have the configuration steps completed, you can run the program.
 
 - Start a debugging session. 
-    * You can set this project as default project to run on hitting F5 by modifying the files in .vscode folder. Learn more [here](https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md).
+    * You can set this project as default project to run on hitting F5 by modifying the files in .vscode folder. Learn more about [debugging in VS Code](https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md).
         * `launch.json` - Update the **"program"** and **"cwd"** to launch ExportBatchPipelineJobSampleCode.
         * `tasks.json` - Update **"args"** to point to ExportBatchPipelineJobSampleCode.csproj.
     * Alternatively, go to TERMINAL window in the Visual Studio Code, navigate using `cd <path>` to src/video-export. Type commands `dotnet build` and `dotnet run` to compile and run the program respectively.  
