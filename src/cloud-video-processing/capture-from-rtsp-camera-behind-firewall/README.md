@@ -10,8 +10,8 @@ Azure Video Analyzer sample to capture and record live video from an RTSP camera
 | `Program.cs`            | The main program file                                         |
 
 ### Suggested Pre-reading
-* [Connect camera to cloud](https://review.docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/cloud/connect-cameras-to-cloud?branch=release-ignite-video-analyzer)
-* [Connect camera to cloud using remote device adapter](https://review.docs.microsoft.com/en-us/azure/azure-video-analyzer/video-analyzer-docs/cloud/use-remote-device-adapter?branch=release-ignite-video-analyzer)
+* [Connect camera to cloud](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/cloud/connect-cameras-to-cloud)
+* [Connect camera to cloud using remote device adapter](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/cloud/use-remote-device-adapter)
 
 ### Pre-requisites
 
@@ -21,7 +21,7 @@ Azure Video Analyzer sample to capture and record live video from an RTSP camera
 
 1. Create a [Video Analyzer account](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/create-video-analyzer-account?tabs=portal), and attach an IoT Hub to this account.
 
-1.  [IoT Edge device with the Video Analyzer edge module installed and configured](https://review.docs.microsoft.com/en-us/azure/azure-video-analyzer/video-analyzer-docs/edge/deploy-iot-edge-device?branch=release-ignite-video-analyzer), under the IoT Hub used above.
+1.  [IoT Edge device with the Video Analyzer edge module installed and configured](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/edge/deploy-iot-edge-device), under the IoT Hub used above.
 
 1. [Visual Studio Code](https://code.visualstudio.com/) on your development machine with following extensions -
     * [Azure IoT Tools](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools)
@@ -33,9 +33,9 @@ Azure Video Analyzer sample to capture and record live video from an RTSP camera
     * Ensure that camera(s) are on the same network as the above IoT Edge device
     * Ensure that you can configure the camera to send video at or below a maximum bandwidth of 3000 Kbps
 
-1. [Create an IoT device](https://review.docs.microsoft.com/en-us/azure/azure-video-analyzer/video-analyzer-docs/cloud/use-remote-device-adapter?branch=release-ignite-video-analyzer#create-an-iot-device)
+1. [Create an IoT device](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/cloud/use-remote-device-adapter#create-an-iot-device)
 
-1. [Create a remote device adapter](https://review.docs.microsoft.com/en-us/azure/azure-video-analyzer/video-analyzer-docs/cloud/use-remote-device-adapter?branch=release-ignite-video-analyzer#create-a-remote-device-adapter)
+1. [Create a remote device adapter](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/cloud/use-remote-device-adapter#create-a-remote-device-adapter)
 
 ### Setup
 
@@ -95,17 +95,17 @@ public static async Task Main(string[] args)
 Once you have the configuration steps completed, you can run the program.
 
 - Start a debugging session. 
-    * You can set this project as default project to run on hitting F5 by modifying the files in .vscode folder. Learn more [here](https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md).
+    * You can set this project as default project to run on hitting F5 by modifying the files in .vscode folder. Learn more about [debugging in VS Code](https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md).
         * `launch.json` - Update the **"program"** and **"cwd"** to launch PrivateCameraPipelineSampleCode.
         * `tasks.json` - Update **"args"** to point to PrivateCameraPipelineSampleCode.csproj.
     * Alternatively, go to TERMINAL window in the Visual Studio Code, navigate using `cd <path>` to src/cloud-video-processing/capture-from-rtsp-camera-behind-firewall folder. Type commands `dotnet build` and `dotnet run` to compile and run the program respectively.
 - You will start seeing some messages printed in the TERMINAL window regarding topology and pipeline creation. If the creation is successful, the live pipeline is activated and you can go to the Azure portal to view the video.
 - Login to [Azure portal](https://portal.azure.com/), go to the Video Analyzer account being used for this project.
-- Click on Videos blade and choose the video created. The video will be in an `In use` status.  Click on the video, and you should see a [low latency stream](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/playback-recordings-how-to.md#low-latency-streaming) of the live video from the camera.
+- Click on Videos blade and choose the video created. The video will be in an `In use` status.  Click on the video, and you should see a [low latency stream](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/playback-recordings-how-to#low-latency-streaming) of the live video from the camera.
 - Go back to Visual Studio Code TERMINAL window and press enter to deactivate the pipeline and cleanup the resources including pipeline and topology. The recording is persisted and status changes to `Not recording`.
 
 ### Next steps
 
-- [Export a portion of the recorded video as an MP4 file](../src/video-export)
+- [Export a portion of the recorded video as an MP4 file](./src/video-export)
 - Learn more about [pipelines](https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/pipeline)
 - [Quotas and limitations](https://aka.ms/livequota) on live pipelines
